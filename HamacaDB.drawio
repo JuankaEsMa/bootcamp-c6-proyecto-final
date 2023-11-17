@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-11-17T15:42:39.218Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="tACBLCrgCmrJWP-i_Hzs" version="22.1.3" type="device">
+<mxfile host="app.diagrams.net" modified="2023-11-17T18:24:36.048Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="6fm7Rg2U0IB5cI5zIfd3" version="22.1.3" type="device">
   <diagram name="Página-1" id="1X8Iny33pq9lPDNBV9mD">
-    <mxGraphModel dx="1932" dy="586" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2140" dy="696" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -41,13 +41,10 @@
           <mxGeometry y="26" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="LVyIuK751i1x7JXOCKPr-15" value="Empleado" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;" parent="1" vertex="1">
-          <mxGeometry x="520" y="500" width="160" height="86" as="geometry" />
+          <mxGeometry x="520" y="500" width="160" height="56" as="geometry" />
         </mxCell>
         <mxCell id="LVyIuK751i1x7JXOCKPr-16" value="Cuenta Bancaria" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" parent="LVyIuK751i1x7JXOCKPr-15" vertex="1">
           <mxGeometry y="26" width="160" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="LVyIuK751i1x7JXOCKPr-50" value="EsAdministrador" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" parent="LVyIuK751i1x7JXOCKPr-15" vertex="1">
-          <mxGeometry y="56" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="LVyIuK751i1x7JXOCKPr-19" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.extract_or_measurement;whiteSpace=wrap;rotation=-180;" parent="1" vertex="1">
           <mxGeometry x="382.5" y="380" width="95" height="60" as="geometry" />

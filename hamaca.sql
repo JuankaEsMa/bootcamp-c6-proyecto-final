@@ -1,8 +1,5 @@
-DROP DATABASE IF EXISTS hamaca;
 
-CREATE DATABASE IF NOT EXISTS hamaca;
-
-USE hamaca;
+USE railway;
 
 CREATE TABLE IF NOT EXISTS Usuario (
 	Id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Chollo (
     Id INT AUTO_INCREMENT,
     Titulo VARCHAR(125),
     Imagen VARCHAR(250),
-    Precio_Por_Persona FLOAT,
+    Precio_Persona FLOAT,
     Cantidad_Personas VARCHAR(10),
     Descripcion VARCHAR(250),
     Fecha_Caducidad DATE,
@@ -72,7 +69,10 @@ CREATE TABLE IF NOT EXISTS Chollo (
 CREATE TABLE IF NOT EXISTS Reserva (
     Id_Cliente INT,
     Id_Chollo INT,
-    Fecha_Compra DATE,
+    Fecha_Compra date,
+	Num_Noches INT,
+	Num_Personas INT,
+	nota INT check (nota between 0 and 10),
     PRIMARY KEY (Id_Cliente , Id_Chollo),
     FOREIGN KEY (Id_Cliente)
         REFERENCES Cliente (Id),
