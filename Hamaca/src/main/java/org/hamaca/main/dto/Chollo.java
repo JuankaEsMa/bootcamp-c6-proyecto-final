@@ -31,6 +31,8 @@ public class Chollo {
 	private int cantidadPersonas;
 	@Column(name="Descripcion")
 	private String descripcion;
+	@Column(name="Is_Deleted")
+	private boolean isDelete;
 	@Column(name="Fecha_Caducidad")
 	private Date fechaCaducidad;
 	@JoinColumn(name="Id_Localidad")

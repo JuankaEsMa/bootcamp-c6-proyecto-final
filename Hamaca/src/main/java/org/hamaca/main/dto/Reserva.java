@@ -22,8 +22,9 @@ public class Reserva {
 	private int numPersonas;
 	@Column(name="Nota")
 	private int nota;
-	@JoinColumn(name="id_Chollo")
+	@JoinColumn(name="Id_Chollo")
 	private Chollo id_Chollo;
+	@JoinColumn(name="Id_Cliente")
 	private Cliente cliente;
 	public Reserva() {
 		
