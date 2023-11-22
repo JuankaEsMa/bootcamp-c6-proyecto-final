@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,12 +19,19 @@ import jakarta.persistence.ManyToMany;
 public class Chollo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="Id")
 	private int id;
+	@Column(name="Titulo")
 	private String titulo;
+	@Column(name="Imagen")
 	private String imagen;
+	@Column(name="Precio_Persona")
 	private double precioPersona;
+	@Column(name="Cantidad_Personas")
 	private int cantidadPersonas;
+	@Column(name="Descripcion")
 	private String descripcion;
+	@Column(name="Fecha_Caducidad")
 	private Date fechaCaducidad;
 	@JoinColumn(name="Id_Localidad")
 	private Localidad idLocalidad;
@@ -35,6 +43,8 @@ public class Chollo {
     )
     @JsonIgnoreProperties("Id_Chollo")
 	private List<Tematica> tematicas;
+	@JoinColumn(name="Id_Empleado")
+    private Empleado empleado;
 	
 	public Chollo() {
 		
@@ -86,6 +96,18 @@ public class Chollo {
 	}
 	public void setIdLocalidad(Localidad idLocalidad) {
 		this.idLocalidad = idLocalidad;
+	}
+	public List<Tematica> getTematicas() {
+		return tematicas;
+	}
+	public void setTematicas(List<Tematica> tematicas) {
+		this.tematicas = tematicas;
+	}
+	public Empleado getEmpleado() {
+		return empleado;
+	}
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
 	}
 	
 }

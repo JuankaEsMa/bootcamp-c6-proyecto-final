@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS Chollo (
     Titulo VARCHAR(125),
     Imagen VARCHAR(250),
     Precio_Persona FLOAT,
-    Cantidad_Personas VARCHAR(10),
+    Cantidad_Personas INT,
     Descripcion VARCHAR(250),
     Fecha_Caducidad DATE,
     Is_Deleted BOOLEAN,
@@ -67,13 +67,13 @@ CREATE TABLE IF NOT EXISTS Chollo (
 );
 
 CREATE TABLE IF NOT EXISTS Reserva (
+	Id INT AUTO_INCREMENT PRIMARY KEY,
     Id_Cliente INT,
     Id_Chollo INT,
     Fecha_Compra date,
 	Num_Noches INT,
 	Num_Personas INT,
 	nota INT check (nota between 0 and 10),
-    PRIMARY KEY (Id_Cliente , Id_Chollo),
     FOREIGN KEY (Id_Cliente)
         REFERENCES Cliente (Id),
     FOREIGN KEY (Id_Chollo)
@@ -87,9 +87,9 @@ CREATE TABLE IF NOT EXISTS Tematica (
 );
 
 CREATE TABLE Favorito (
+	Id INT AUTO_INCREMENT PRIMARY KEY,
     Id_Chollo INT,
     Id_Cliente INT,
-     PRIMARY KEY (Id_Chollo , Id_Cliente),
     FOREIGN KEY (Id_Chollo)
         REFERENCES Chollo (id)
         ON UPDATE CASCADE ON DELETE CASCADE,
@@ -99,9 +99,9 @@ CREATE TABLE Favorito (
 );
 
 CREATE TABLE IF NOT EXISTS Pertenece (
+	Id INT AUTO_INCREMENT PRIMARY KEY,
     Id_Chollo INT,
     Id_Tematica INT,
-    PRIMARY KEY (Id_Chollo , Id_Tematica),
     FOREIGN KEY (Id_Chollo)
         REFERENCES Chollo (Id)
         ON UPDATE CASCADE ON DELETE CASCADE,
