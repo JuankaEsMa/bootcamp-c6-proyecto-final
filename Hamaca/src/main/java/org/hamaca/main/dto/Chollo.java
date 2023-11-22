@@ -32,11 +32,11 @@ public class Chollo {
 	@Column(name="Descripcion")
 	private String descripcion;
 	@Column(name="Is_Deleted")
-	private boolean isDelete;
+	private boolean isDeleted;
 	@Column(name="Fecha_Caducidad")
 	private Date fechaCaducidad;
 	@JoinColumn(name="Id_Localidad")
-	private Localidad idLocalidad;
+	private Localidad localidad;
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "Pertenece",
@@ -93,11 +93,11 @@ public class Chollo {
 	public void setFechaCaducidad(Date fechaCaducidad) {
 		this.fechaCaducidad = fechaCaducidad;
 	}
-	public Localidad getIdLocalidad() {
-		return idLocalidad;
+	public Localidad getLocalidad() {
+		return localidad;
 	}
-	public void setIdLocalidad(Localidad idLocalidad) {
-		this.idLocalidad = idLocalidad;
+	public void setLocalidad(Localidad localidad) {
+		this.localidad = localidad;
 	}
 	public List<Tematica> getTematicas() {
 		return tematicas;
@@ -110,6 +110,12 @@ public class Chollo {
 	}
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
+	}
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 }

@@ -36,4 +36,11 @@ public class Tematica {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	public List<Chollo> getChollos() {
+		return chollos;
+	}
+	public void setChollos(List<Chollo> chollos) {
+		this.chollos = chollos;
+	}
+	
 }
