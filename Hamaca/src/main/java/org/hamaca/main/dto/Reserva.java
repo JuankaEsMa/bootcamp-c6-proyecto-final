@@ -23,12 +23,14 @@ public class Reserva {
 	@Column(name="Nota")
 	private int nota;
 	@JoinColumn(name="Id_Chollo")
-	private Chollo id_Chollo;
+	private Chollo chollo;
 	@JoinColumn(name="Id_Cliente")
 	private Cliente cliente;
+	
 	public Reserva() {
 		
 	}
+	
 	public int getId() {
 		return id;
 	}
@@ -59,11 +61,17 @@ public class Reserva {
 	public void setNota(int nota) {
 		this.nota = nota;
 	}
-	public Chollo getId_Chollo() {
-		return id_Chollo;
+	public Chollo getChollo() {
+		return chollo;
 	}
-	public void setId_Chollo(Chollo id_Chollo) {
-		this.id_Chollo = id_Chollo;
+	public void setChollo(Chollo chollo) {
+		this.chollo = chollo;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 }
