@@ -67,13 +67,13 @@ public class CholloController {
 	}
 	@PostMapping("/{id}")
 	public ResponseEntity<String> salvarEstudianteCurso(@RequestBody Tematica tematica, @PathVariable(name="id")Integer id) {
-	    // Guarda el estudiante
+	    // Guarda la tematica
 		Tematica tematicaGuardar = tematicaService.getTematica(tematica.getId());
 
-	    // Obtiene el curso por su ID
+	    // Obtiene el chollo por su ID
 	    Chollo chollo = cholloService.getChollo(id);
 
-	    // Asocia el estudiante con el curso
+	    // Asocia la tematica con el chollo
 	    if (tematicaGuardar != null) {
 	    	chollo.getTematicas().add(tematicaGuardar);
 	    	tematicaGuardar.getChollos().add(chollo);
