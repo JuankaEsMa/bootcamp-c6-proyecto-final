@@ -7,12 +7,19 @@ import org.hamaca.main.service.CholloService;
 import org.hamaca.main.service.TematicaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.persistence.EntityManager;
 
+@RestController
+@RequestMapping("chollo")
 public class CholloController {
 	
 	@Autowired
@@ -22,17 +29,18 @@ public class CholloController {
 	@Autowired
     private EntityManager entityManager;
 	
+	@GetMapping("")
 	public List<Chollo> listChollo() {
 		// TODO Auto-generated method stub
 		return cholloService.listChollo();
 	}
-
-	public Chollo addChollo(Chollo chollo) {
+	@PostMapping("")
+	public Chollo addChollo(@RequestBody Chollo chollo) {
 		// TODO Auto-generated method stub
 		return cholloService.saveChollo(chollo);
 	}
-
-	public Chollo updateChollo(Integer id, Chollo chollo) {
+	@PutMapping("/{id}")
+	public Chollo updateChollo(@PathVariable Integer id, @RequestBody Chollo chollo) {
 		Chollo cholloActualizar = cholloService.getChollo(id);
 		
 		cholloActualizar.setTitulo(chollo.getTitulo());
@@ -47,17 +55,17 @@ public class CholloController {
 
 		return cholloActualizar;
 	}
-	
-	public Chollo showChollo(Integer id) {
+	@GetMapping("/{id}")
+	public Chollo showChollo(@PathVariable Integer id) {
 		// TODO Auto-generated method stub
 		return cholloService.getChollo(id);
 	}
-
-	public void deleteChollo(Integer id) {
+	@DeleteMapping("/{id}")
+	public void deleteChollo(@PathVariable Integer id) {
 		// TODO Auto-generated method stub
 		cholloService.deleteChollo(id);
 	}
-	
+	@PostMapping("/{id}")
 	public ResponseEntity<String> salvarEstudianteCurso(@RequestBody Tematica tematica, @PathVariable(name="id")Integer id) {
 	    // Guarda el estudiante
 		Tematica tematicaGuardar = tematicaService.getTematica(tematica.getId());
