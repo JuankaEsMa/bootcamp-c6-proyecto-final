@@ -21,28 +21,30 @@ import jakarta.persistence.EntityManager;
 @RestController
 @RequestMapping("chollo")
 public class CholloController {
-	
+
 	@Autowired
 	CholloService cholloService;
 	@Autowired
 	TematicaService tematicaService;
 	@Autowired
-    private EntityManager entityManager;
-	
+	private EntityManager entityManager;
+
 	@GetMapping("")
 	public List<Chollo> listChollo() {
 		// TODO Auto-generated method stub
 		return cholloService.listChollo();
 	}
+
 	@PostMapping("")
 	public Chollo addChollo(@RequestBody Chollo chollo) {
 		// TODO Auto-generated method stub
 		return cholloService.saveChollo(chollo);
 	}
+
 	@PutMapping("/{id}")
 	public Chollo updateChollo(@PathVariable Integer id, @RequestBody Chollo chollo) {
 		Chollo cholloActualizar = cholloService.getChollo(id);
-		
+
 		cholloActualizar.setTitulo(chollo.getTitulo());
 		cholloActualizar.setImagen(chollo.getImagen());
 		cholloActualizar.setPrecioPersona(chollo.getPrecioPersona());
@@ -55,34 +57,38 @@ public class CholloController {
 
 		return cholloActualizar;
 	}
+
 	@GetMapping("/{id}")
 	public Chollo showChollo(@PathVariable Integer id) {
 		// TODO Auto-generated method stub
 		return cholloService.getChollo(id);
 	}
+
 	@DeleteMapping("/{id}")
 	public void deleteChollo(@PathVariable Integer id) {
 		// TODO Auto-generated method stub
 		cholloService.deleteChollo(id);
 	}
+
 	@PostMapping("/{id}")
-	public ResponseEntity<String> salvarEstudianteCurso(@RequestBody Tematica tematica, @PathVariable(name="id")Integer id) {
-	    // Guarda la tematica
+	public ResponseEntity<String> salvarEstudianteCurso(@RequestBody Tematica tematica,
+			@PathVariable(name = "id") Integer id) {
+		// Guarda la tematica
 		Tematica tematicaGuardar = tematicaService.getTematica(tematica.getId());
 
-	    // Obtiene el chollo por su ID
-	    Chollo chollo = cholloService.getChollo(id);
+		// Obtiene el chollo por su ID
+		Chollo chollo = cholloService.getChollo(id);
 
-	    // Asocia la tematica con el chollo
-	    if (tematicaGuardar != null) {
-	    	chollo.getTematicas().add(tematicaGuardar);
-	    	tematicaGuardar.getChollos().add(chollo);
-	        entityManager.persist(chollo);
-	        entityManager.persist(tematicaGuardar);
-	    }
+		// Asocia la tematica con el chollo
+		if (tematicaGuardar != null) {
+			chollo.getTematicas().add(tematicaGuardar);
+			tematicaGuardar.getChollos().add(chollo);
+			entityManager.persist(chollo);
+			entityManager.persist(tematicaGuardar);
+		}
 
-	    return ResponseEntity.ok("Tematica asociada con éxito");
-	    
+		return ResponseEntity.ok("Tematica asociada con éxito");
+
 	}
-	
+
 }

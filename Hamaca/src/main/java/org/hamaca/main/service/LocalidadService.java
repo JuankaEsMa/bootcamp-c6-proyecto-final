@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LocalidadService implements ILocalidadService{
+public class LocalidadService implements ILocalidadService {
 
 	@Autowired
 	ILocalidadDAO localidadDAO;
-	
+
 	@Override
 	public List<Localidad> listLocalidad() {
 		// TODO Auto-generated method stub
