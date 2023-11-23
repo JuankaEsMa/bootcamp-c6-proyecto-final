@@ -45,7 +45,6 @@ public class UsuarioController {
 		usuarioActualizar.setDeleted(usuario.getDeleted());
 		usuarioActualizar.setApellidos(usuario.getApellidos());
 
-
 		return usuarioActualizar;
 	}
 	@GetMapping("/{id}")
