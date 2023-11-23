@@ -35,7 +35,7 @@ public class Usuario {
 	@Column(name="Email")
 	private String email;
 	@Column(name="Fecha_Nacimiento")
-	private Date fecha_nacimeinto;
+	private Date fecha_nacimiento;
 	@Column(name="Is_Deleted")
 	private Boolean isDeleted;
 	
@@ -85,11 +85,11 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getFecha_nacimeinto() {
-		return fecha_nacimeinto;
+	public Date getFecha_nacimientoto() {
+		return fecha_nacimiento;
 	}
-	public void setFecha_nacimeinto(Date fecha_nacimeinto) {
-		this.fecha_nacimeinto = fecha_nacimeinto;
+	public void setFecha_nacimiento(Date fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
 	}
 	public Boolean getDeleted() {
 		return isDeleted;
