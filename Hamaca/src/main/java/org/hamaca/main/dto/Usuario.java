@@ -37,26 +37,11 @@ public class Usuario {
 	@Column(name="Fecha_Nacimiento")
 	private Date fecha_nacimeinto;
 	@Column(name="Is_Deleted")
-	private Boolean is_deleted;
+	private Boolean isDeleted;
 	
 	public Usuario() {
 		
 	}
-	
-	public Usuario(int id, String nombre, String apellidos, String telefono, String dni, String direccion, String email,
-			Date fecha_nacimeinto, Boolean is_deleted) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.telefono = telefono;
-		this.dni = dni;
-		this.direccion = direccion;
-		this.email = email;
-		this.fecha_nacimeinto = fecha_nacimeinto;
-		this.is_deleted = is_deleted;
-	}
-
 
 	public int getId() {
 		return id;
@@ -106,17 +91,10 @@ public class Usuario {
 	public void setFecha_nacimeinto(Date fecha_nacimeinto) {
 		this.fecha_nacimeinto = fecha_nacimeinto;
 	}
-	public Boolean getIs_deleted() {
-		return is_deleted;
+	public Boolean getDeleted() {
+		return isDeleted;
 	}
-	public void setIs_deleted(Boolean is_deleted) {
-		this.is_deleted = is_deleted;
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", telefono=" + telefono
-				+ ", dni=" + dni + ", direccion=" + direccion + ", email=" + email + ", fecha_nacimeinto="
-				+ fecha_nacimeinto + ", is_deleted=" + is_deleted + "]";
+	public void setDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 }

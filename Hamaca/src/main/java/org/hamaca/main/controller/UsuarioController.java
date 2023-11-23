@@ -36,6 +36,15 @@ public class UsuarioController {
 		Usuario usuarioActualizar = usuarioService.getUsuario(id);
 		
 		usuarioActualizar.setNombre(usuario.getNombre());
+		usuarioActualizar.setApellidos(usuario.getApellidos());
+		usuarioActualizar.setTelefono(usuario.getTelefono());
+		usuarioActualizar.setDni(usuario.getDni());
+		usuarioActualizar.setDireccion(usuario.getDireccion());
+		usuarioActualizar.setEmail(usuario.getEmail());
+		usuarioActualizar.setFecha_nacimeinto(usuario.getFecha_nacimeinto());
+		usuarioActualizar.setDeleted(usuario.getDeleted());
+		usuarioActualizar.setApellidos(usuario.getApellidos());
+
 
 		return usuarioActualizar;
 	}
