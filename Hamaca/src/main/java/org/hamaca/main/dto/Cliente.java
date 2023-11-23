@@ -2,8 +2,6 @@ package org.hamaca.main.dto;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
@@ -17,7 +15,7 @@ public class Cliente{
 	@JoinColumn(name="Id")
 	private Usuario usuario;
 	@Column(name="Cuenta_bancaria")
-	private String cuenta_bancaria;
+	private String cuentaBancaria;
 	
 	@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -36,11 +34,20 @@ public class Cliente{
 		this.usuario = usuario;
 	}
 
-	public String getCuenta_bancaria() {
-		return cuenta_bancaria;
+	public String getCuentaBancaria() {
+		return cuentaBancaria;
 	}
 
-	public void setCuenta_bancaria(String cuenta_bancaria) {
-		this.cuenta_bancaria = cuenta_bancaria;
+	public void setCuentaBancaria(String cuentaBancaria) {
+		this.cuentaBancaria = cuentaBancaria;
 	}
+
+	public List<Chollo> getFavoritos() {
+		return favoritos;
+	}
+
+	public void setFavoritos(List<Chollo> favoritos) {
+		this.favoritos = favoritos;
+	}
+	
 }

@@ -34,7 +34,7 @@ public class EmpleadoController {
 	}
 
 	@PutMapping("/{id}")
-	public Empleado updateEmpleado(@PathVariable Integer id, @RequestBody Empleado empleado) {
+	public Empleado updateEmpleado(@PathVariable Usuario id, @RequestBody Empleado empleado) {
 		Empleado empleadoActualizar = empleadoService.getEmpleado(id);
 		Usuario usuarioActualizar = empleadoActualizar.getUsuario();
 
@@ -44,7 +44,7 @@ public class EmpleadoController {
 		usuarioActualizar.setDni(empleado.getUsuario().getDni());
 		usuarioActualizar.setDireccion(empleado.getUsuario().getDireccion());
 		usuarioActualizar.setEmail(empleado.getUsuario().getEmail());
-		usuarioActualizar.setFecha_nacimiento(empleado.getUsuario().getFecha_nacimientoto());
+		usuarioActualizar.setFechaNacimiento(empleado.getUsuario().getFechaNacimientoto());
 		usuarioActualizar.setDeleted(empleado.getUsuario().getDeleted());
 		usuarioActualizar.setApellidos(empleado.getUsuario().getApellidos());
 
@@ -54,13 +54,13 @@ public class EmpleadoController {
 	}
 
 	@GetMapping("/{id}")
-	public Empleado showEmpleado(@PathVariable Integer id) {
+	public Empleado showEmpleado(@PathVariable Usuario id) {
 		// TODO Auto-generated method stub
 		return empleadoService.getEmpleado(id);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteEmpleado(@PathVariable Integer id) {
+	public void deleteEmpleado(@PathVariable Usuario id) {
 		// TODO Auto-generated method stub
 		empleadoService.deleteEmpleado(id);
 	}

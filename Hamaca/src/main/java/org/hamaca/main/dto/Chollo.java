@@ -1,6 +1,7 @@
 package org.hamaca.main.dto;
 
 import java.sql.Date;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,7 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Chollo {
@@ -37,11 +37,10 @@ public class Chollo {
 	@Column(name="Fecha_Caducidad")
 	private Date fechaCaducidad;
 	@JoinColumn(name="Id_Localidad")
-	private Localidad idLocalidad;
+	private Localidad localidad;
 	@JoinColumn(name="Id_Empleado")
 	private Empleado idEmpleado;
-	
-	private Localidad localidad;
+
 
 	@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -127,6 +126,14 @@ public class Chollo {
 	}
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+
+	public List<Cliente> getFavoritos() {
+		return favoritos;
+	}
+
+	public void setFavoritos(List<Cliente> favoritos) {
+		this.favoritos = favoritos;
 	}
 	
 }

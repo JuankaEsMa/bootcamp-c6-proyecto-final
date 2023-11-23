@@ -1,20 +1,13 @@
 package org.hamaca.main.dto;
 
 import java.sql.Date;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 
 @Entity
 public class Usuario {
@@ -35,7 +28,7 @@ public class Usuario {
 	@Column(name="Email")
 	private String email;
 	@Column(name="Fecha_Nacimiento")
-	private Date fecha_nacimiento;
+	private Date fechaNacimiento;
 	@Column(name="Is_Deleted")
 	private Boolean isDeleted;
 	
@@ -85,11 +78,11 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getFecha_nacimientoto() {
-		return fecha_nacimiento;
+	public Date getFechaNacimientoto() {
+		return fechaNacimiento;
 	}
-	public void setFecha_nacimiento(Date fecha_nacimiento) {
-		this.fecha_nacimiento = fecha_nacimiento;
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 	public Boolean getDeleted() {
 		return isDeleted;

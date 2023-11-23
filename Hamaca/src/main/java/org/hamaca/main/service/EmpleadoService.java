@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hamaca.main.dao.IEmpleadoDAO;
 import org.hamaca.main.dto.Empleado;
+import org.hamaca.main.dto.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +27,13 @@ public class EmpleadoService implements IEmpleadoService {
 	}
 
 	@Override
-	public Empleado getEmpleado(Integer id) {
+	public Empleado getEmpleado(Usuario id) {
 		// TODO Auto-generated method stub
 		return empleadoDAO.findById(id).get();
 	}
 
 	@Override
-	public void deleteEmpleado(Integer id) {
+	public void deleteEmpleado(Usuario id) {
 		// TODO Auto-generated method stub
 		empleadoDAO.deleteById(id);
 	}

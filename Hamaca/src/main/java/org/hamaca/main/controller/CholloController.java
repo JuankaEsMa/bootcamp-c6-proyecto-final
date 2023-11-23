@@ -71,7 +71,7 @@ public class CholloController {
 	}
 
 	@PostMapping("/{id}")
-	public ResponseEntity<String> salvarEstudianteCurso(@RequestBody Tematica tematica,
+	public ResponseEntity<String> guardarTematica(@RequestBody Tematica tematica,
 			@PathVariable(name = "id") Integer id) {
 		// Guarda la tematica
 		Tematica tematicaGuardar = tematicaService.getTematica(tematica.getId());

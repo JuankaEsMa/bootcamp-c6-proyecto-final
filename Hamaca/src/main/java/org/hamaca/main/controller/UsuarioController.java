@@ -3,7 +3,6 @@ package org.hamaca.main.controller;
 import java.util.List;
 
 import org.hamaca.main.dto.Usuario;
-import org.hamaca.main.service.CholloService;
 import org.hamaca.main.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,7 +42,7 @@ public class UsuarioController {
 		usuarioActualizar.setDni(usuario.getDni());
 		usuarioActualizar.setDireccion(usuario.getDireccion());
 		usuarioActualizar.setEmail(usuario.getEmail());
-		usuarioActualizar.setFecha_nacimiento(usuario.getFecha_nacimientoto());
+		usuarioActualizar.setFechaNacimiento(usuario.getFechaNacimientoto());
 		usuarioActualizar.setDeleted(usuario.getDeleted());
 		usuarioActualizar.setApellidos(usuario.getApellidos());
 

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.hamaca.main.dto.Chollo;
 import org.hamaca.main.dto.Cliente;
-import org.hamaca.main.dto.Tematica;
 import org.hamaca.main.dto.Usuario;
+import org.hamaca.main.service.CholloService;
 import org.hamaca.main.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.EntityManager;
+
 @RestController
 @RequestMapping("cliente")
 public class ClienteController {
 
 	@Autowired
 	ClienteService clienteService;
+	@Autowired
+	CholloService cholloService;
+	@Autowired
+	private EntityManager entityManager;
 	
 	@GetMapping
 	public List<Cliente> listCliente(){
@@ -48,7 +54,7 @@ public class ClienteController {
         usuarioActualizar.setDni(cliente.getUsuario().getDni());
         usuarioActualizar.setDireccion(cliente.getUsuario().getDireccion());
         usuarioActualizar.setEmail(cliente.getUsuario().getEmail());
-        usuarioActualizar.setFecha_nacimiento(cliente.getUsuario().getFecha_nacimientoto());
+        usuarioActualizar.setFechaNacimiento(cliente.getUsuario().getFechaNacimientoto());
         usuarioActualizar.setDeleted(cliente.getUsuario().getDeleted());
 		
 		return clienteActualizar;
@@ -64,5 +70,26 @@ public class ClienteController {
 	public void deleteCliente(@PathVariable Usuario id) {
 		// TODO Auto-generated method stub
 		clienteService.deleteCliente(id);
+	}
+	
+	@PostMapping("/{id}")
+	public ResponseEntity<String> guardarFavorito(@RequestBody Chollo chollo,
+			@PathVariable(name = "id") Usuario id) {
+		// Guarda la tematica
+		Chollo cholloGuardar = cholloService.getChollo(chollo.getId());
+
+		// Obtiene el chollo por su ID
+		Cliente cliente = clienteService.getCliente(id);
+
+		// Asocia la tematica con el chollo
+		if (cholloGuardar != null) {
+			cliente.getFavoritos().add(cholloGuardar);
+			cholloGuardar.getFavoritos().add(cliente);
+			entityManager.persist(cliente);
+			entityManager.persist(cholloGuardar);
+		}
+
+		return ResponseEntity.ok("Chollo asociado con éxito");
+
 	}
 }
