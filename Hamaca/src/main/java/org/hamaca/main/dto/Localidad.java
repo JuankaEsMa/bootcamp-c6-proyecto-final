@@ -1,5 +1,6 @@
 package org.hamaca.main.dto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class Localidad {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name="Nombre")
 	private String nombre;
 	@JoinColumn(name="Id_Pais")
 	private Pais idPais;

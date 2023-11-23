@@ -2,6 +2,7 @@ package org.hamaca.main.dto;
 
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,9 +15,13 @@ public class Reserva {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name="Fecha_Compra")
 	private Date fechaCompra;
+	@Column(name="Num_Noches")
 	private int numNoches;
+	@Column(name="Num_Personas")
 	private int numPersonas;
+	@Column(name="Nota")
 	private int nota;
 	
 	@ManyToOne
@@ -26,9 +31,11 @@ public class Reserva {
 	@JoinColumn(name="id_Cliente")
 	private Chollo id_Cliente;
 	
+	
 	public Reserva() {
 		
 	}
+	
 	public int getId() {
 		return id;
 	}

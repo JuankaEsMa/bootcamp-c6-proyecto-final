@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,24 +20,36 @@ import jakarta.persistence.OneToMany;
 public class Chollo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="Id")
 	private int id;
+	@Column(name="Titulo")
 	private String titulo;
+	@Column(name="Imagen")
 	private String imagen;
+	@Column(name="Precio_Persona")
 	private double precioPersona;
+	@Column(name="Cantidad_Personas")
 	private int cantidadPersonas;
+	@Column(name="Descripcion")
 	private String descripcion;
+	@Column(name="Is_Deleted")
+	private boolean isDeleted;
+	@Column(name="Fecha_Caducidad")
 	private Date fechaCaducidad;
 	@JoinColumn(name="Id_Localidad")
 	private Localidad idLocalidad;
 	@JoinColumn(name="Id_Empleado")
-	private Localidad idEmpleado;
+	private Empleado idEmpleado;
 	
-    @ManyToMany(cascade = { CascadeType.ALL })
+	private Localidad localidad;
+
+	@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "Pertenece",
         joinColumns = { @JoinColumn(name = "Id_Chollo") },
         inverseJoinColumns = { @JoinColumn(name = "Id_Tematica")}
     )
+	
     @JsonIgnoreProperties("Id_Chollo")
 	private List<Tematica> tematicas;
     
@@ -48,7 +61,7 @@ public class Chollo {
     )
     @JsonIgnoreProperties("Id_Chollo")
 	private List<Cliente> favoritos;
-    
+
 	
 	public Chollo() {
 		
@@ -97,11 +110,29 @@ public class Chollo {
 	public void setFechaCaducidad(Date fechaCaducidad) {
 		this.fechaCaducidad = fechaCaducidad;
 	}
-	public Localidad getIdLocalidad() {
-		return idLocalidad;
+	public Localidad getLocalidad() {
+		return localidad;
 	}
-	public void setIdLocalidad(Localidad idLocalidad) {
-		this.idLocalidad = idLocalidad;
+	public void setLocalidad(Localidad localidad) {
+		this.localidad = localidad;
+	}
+	public List<Tematica> getTematicas() {
+		return tematicas;
+	}
+	public void setTematicas(List<Tematica> tematicas) {
+		this.tematicas = tematicas;
+	}
+	public Empleado getIdEmpleado() {
+		return idEmpleado;
+	}
+	public void setIdEmpleado(Empleado idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 }
