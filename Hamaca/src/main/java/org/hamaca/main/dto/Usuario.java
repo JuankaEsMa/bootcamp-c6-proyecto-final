@@ -5,11 +5,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
@@ -35,10 +38,6 @@ public class Usuario {
 	private Date fecha_nacimeinto;
 	@Column(name="Is_Deleted")
 	private Boolean is_deleted;
-
-	@ManyToMany(mappedBy = "cientificos")
-	@JsonIgnore
-	private List<Chollo> favoritos;
 	
 	public Usuario() {
 		

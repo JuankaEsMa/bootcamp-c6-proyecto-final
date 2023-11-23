@@ -3,6 +3,7 @@ package org.hamaca.main.controller;
 import java.util.List;
 
 import org.hamaca.main.dto.Usuario;
+import org.hamaca.main.service.CholloService;
 import org.hamaca.main.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

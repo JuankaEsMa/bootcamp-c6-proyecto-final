@@ -48,17 +48,11 @@ public class Chollo {
         name = "Pertenece",
         joinColumns = { @JoinColumn(name = "Id_Chollo") },
         inverseJoinColumns = { @JoinColumn(name = "Id_Tematica")}
-    )
-	
+    )	
     @JsonIgnoreProperties("Id_Chollo")
 	private List<Tematica> tematicas;
     
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "Favorito",
-        joinColumns = { @JoinColumn(name = "Id_Chollo") },
-        inverseJoinColumns = { @JoinColumn(name = "Id_Cliente")}
-    )
+	@ManyToMany(mappedBy = "Id_Chollo")
     @JsonIgnoreProperties("Id_Chollo")
 	private List<Cliente> favoritos;
 
