@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Chollo {
@@ -27,6 +28,9 @@ public class Chollo {
 	private Date fechaCaducidad;
 	@JoinColumn(name="Id_Localidad")
 	private Localidad idLocalidad;
+	@JoinColumn(name="Id_Empleado")
+	private Localidad idEmpleado;
+	
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "Pertenece",
@@ -35,10 +39,22 @@ public class Chollo {
     )
     @JsonIgnoreProperties("Id_Chollo")
 	private List<Tematica> tematicas;
+    
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "Favorito",
+        joinColumns = { @JoinColumn(name = "Id_Chollo") },
+        inverseJoinColumns = { @JoinColumn(name = "Id_Cliente")}
+    )
+    @JsonIgnoreProperties("Id_Chollo")
+	private List<Cliente> favoritos;
+    
 	
 	public Chollo() {
 		
 	}
+	
+	
 	public int getId() {
 		return id;
 	}

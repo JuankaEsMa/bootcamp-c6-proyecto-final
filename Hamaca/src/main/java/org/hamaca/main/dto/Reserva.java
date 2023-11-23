@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Reserva {
@@ -17,8 +18,14 @@ public class Reserva {
 	private int numNoches;
 	private int numPersonas;
 	private int nota;
+	
+	@ManyToOne
 	@JoinColumn(name="id_Chollo")
 	private Chollo id_Chollo;
+	@ManyToOne
+	@JoinColumn(name="id_Cliente")
+	private Chollo id_Cliente;
+	
 	public Reserva() {
 		
 	}
@@ -57,6 +64,12 @@ public class Reserva {
 	}
 	public void setId_Chollo(Chollo id_Chollo) {
 		this.id_Chollo = id_Chollo;
+	}
+	public Chollo getId_Cliente() {
+		return id_Cliente;
+	}
+	public void setId_Cliente(Chollo id_Cliente) {
+		this.id_Cliente = id_Cliente;
 	}
 	
 }
