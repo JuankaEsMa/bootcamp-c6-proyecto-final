@@ -52,11 +52,4 @@ public class CholloService implements ICholloService{
 	public List<Chollo> getCholloByTematica(Tematica tematica) {
 		return cholloDAO.findByTematicas(tematica);
 	}
-
-	@Override
-	public List<Chollo> getCholloByPais(Pais pais) {
-		// TODO Auto-generated method stub
-		return cholloDAO.findByPais(pais);
-	}
-
 }

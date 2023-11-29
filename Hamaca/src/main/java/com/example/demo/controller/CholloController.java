@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Chollo;
@@ -41,9 +43,36 @@ public class CholloController {
 	private EntityManager entityManager;
 
 	@GetMapping("")
-	public List<Chollo> listChollo() {
+	public List<Chollo> listChollo(@RequestParam(name="localidad", required=false) Integer id_localidad , @RequestParam(name="tematica", required=false) Integer id_tematica, @RequestParam(name="pais") Integer id_pais) {
 		// TODO Auto-generated method stub
-		return cholloService.listChollo();
+		ArrayList<Chollo> filtro = new ArrayList<Chollo>();
+		ArrayList<Chollo> allChollos = new ArrayList<Chollo>(cholloService.listChollo());
+
+		if(id_localidad != null) {
+			Localidad localidad = localidadService.getLocalidad(id_localidad);
+			if(filtro.isEmpty()) {
+				filtro = new ArrayList<Chollo>(cholloService.getCholloByLocalidad(localidad));
+			}else {
+				filtro.retainAll(cholloService.getCholloByLocalidad(localidad));
+			}
+		}
+		if(id_tematica != null) {
+			Tematica tematica = tematicaService.getTematica(id_tematica);
+			if(filtro.isEmpty()) {
+				filtro = new ArrayList<Chollo>(cholloService.getCholloByTematica(tematica));
+			}else {
+				filtro.retainAll(cholloService.getCholloByTematica(tematica));
+			}
+		}
+		if(id_pais != null) {
+			List<Localidad> localidades = new ArrayList<Localidad>();
+		}
+		
+		
+		if(!filtro.isEmpty()) {
+			allChollos.retainAll(filtro);
+		}
+		return allChollos;
 	}
 
 	@PostMapping("")
@@ -78,24 +107,6 @@ public class CholloController {
 	public void deleteChollo(@PathVariable Integer id) {
 		// TODO Auto-generated method stub
 		cholloService.deleteChollo(id);
-	}
-
-	@GetMapping("localidad/{id}")
-	public List<Chollo> getCholloByLocalidad(@PathVariable Integer id){
-		Localidad localidad = localidadService.getLocalidad(id);
-		return cholloService.getCholloByLocalidad(localidad);
-	}
-	
-	@GetMapping("pais/{id}")
-	public List<Chollo> getCholloByPais(@PathVariable Integer id){
-		Pais pais = paisService.getPais(id);
-		return cholloService.getCholloByPais(pais);
-	}
-	
-	@GetMapping("tematica/{id}")
-	public List<Chollo> getCholloByTematica(@PathVariable Integer id) {
-		Tematica tematica = tematicaService.getTematica(id);
-		return cholloService.getCholloByTematica(tematica);
 	}
 	
 	@PostMapping("/{id}")

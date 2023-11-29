@@ -18,6 +18,5 @@ public interface ICholloService {
 	public void deleteChollo(Integer id);
 	
 	public List<Chollo> getCholloByLocalidad(Localidad localidad);
-	public List<Chollo> getCholloByPais(Pais pais);
 	public List<Chollo> getCholloByTematica(Tematica tematica);
 }

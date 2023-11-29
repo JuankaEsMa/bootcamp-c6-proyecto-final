@@ -39,7 +39,7 @@ public class LocalidadController {
 		Localidad localidadActualizar = localidadService.getLocalidad(id);
 
 		localidadActualizar.setNombre(localidad.getNombre());
-		localidadActualizar.setIdPais(localidad.getIdPais());
+		localidadActualizar.setPais(localidad.getPais());
 
 		return localidadActualizar;
 	}

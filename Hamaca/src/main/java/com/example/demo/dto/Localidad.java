@@ -19,7 +19,7 @@ public class Localidad {
 	private String nombre;
 	@ManyToOne
 	@JoinColumn(name="Id_Pais")
-	private Pais idPais;
+	private Pais pais;
 	public Localidad() {
 		
 	}
@@ -35,10 +35,10 @@ public class Localidad {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public Pais getIdPais() {
-		return idPais;
+	public Pais getPais() {
+		return pais;
 	}
-	public void setIdPais(Pais idPais) {
-		this.idPais = idPais;
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 }
