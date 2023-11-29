@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dao.ICholloDAO;
 import com.example.demo.dto.Chollo;
 import com.example.demo.dto.Localidad;
+import com.example.demo.dto.Pais;
 import com.example.demo.dto.Tematica;
 
 @Service
@@ -50,6 +51,12 @@ public class CholloService implements ICholloService{
 	@Override
 	public List<Chollo> getCholloByTematica(Tematica tematica) {
 		return cholloDAO.findByTematicas(tematica);
+	}
+
+	@Override
+	public List<Chollo> getCholloByPais(Pais pais) {
+		// TODO Auto-generated method stub
+		return cholloDAO.findByPais(pais);
 	}
 
 }

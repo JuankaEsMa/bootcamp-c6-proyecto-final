@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Chollo;
 import com.example.demo.dto.Localidad;
+import com.example.demo.dto.Pais;
 import com.example.demo.dto.Tematica;
 import com.example.demo.service.CholloService;
 import com.example.demo.service.LocalidadService;
+import com.example.demo.service.PaisService;
 import com.example.demo.service.TematicaService;
 
 import jakarta.persistence.EntityManager;
@@ -33,6 +35,8 @@ public class CholloController {
 	TematicaService tematicaService;
 	@Autowired
 	LocalidadService localidadService;
+	@Autowired
+	PaisService paisService;
 	@Autowired
 	private EntityManager entityManager;
 
@@ -80,6 +84,12 @@ public class CholloController {
 	public List<Chollo> getCholloByLocalidad(@PathVariable Integer id){
 		Localidad localidad = localidadService.getLocalidad(id);
 		return cholloService.getCholloByLocalidad(localidad);
+	}
+	
+	@GetMapping("pais/{id}")
+	public List<Chollo> getCholloByPais(@PathVariable Integer id){
+		Pais pais = paisService.getPais(id);
+		return cholloService.getCholloByPais(pais);
 	}
 	
 	@GetMapping("tematica/{id}")
