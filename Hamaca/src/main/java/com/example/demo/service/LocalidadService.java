@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.ILocalidadDAO;
 import com.example.demo.dto.Localidad;
+import com.example.demo.dto.Pais;
 
 @Service
 public class LocalidadService implements ILocalidadService {
@@ -36,6 +37,18 @@ public class LocalidadService implements ILocalidadService {
 	public void deleteLocalidad(Integer id) {
 		// TODO Auto-generated method stub
 		localidadDAO.deleteById(id);
+	}
+
+	@Override
+	public List<Localidad> findLocalidadByNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return localidadDAO.findByNombre(nombre);
+	}
+
+	@Override
+	public List<Localidad> findLocalidadByPais(Pais pais) {
+		// TODO Auto-generated method stub
+		return localidadDAO.findByPais(pais);
 	}
 
 }
