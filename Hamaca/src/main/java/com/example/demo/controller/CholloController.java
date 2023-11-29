@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Chollo;
+import com.example.demo.dto.Localidad;
 import com.example.demo.dto.Tematica;
 import com.example.demo.service.CholloService;
+import com.example.demo.service.LocalidadService;
 import com.example.demo.service.TematicaService;
 
 import jakarta.persistence.EntityManager;
@@ -29,6 +31,8 @@ public class CholloController {
 	CholloService cholloService;
 	@Autowired
 	TematicaService tematicaService;
+	@Autowired
+	LocalidadService localidadService;
 	@Autowired
 	private EntityManager entityManager;
 
@@ -72,6 +76,12 @@ public class CholloController {
 		cholloService.deleteChollo(id);
 	}
 
+	@GetMapping("localidad/{id}")
+	public List<Chollo> getCholloByLocalidad(@PathVariable Integer id){
+		Localidad localidad = localidadService.getLocalidad(id);
+		return cholloService.getCholloByLocalidad(localidad);
+	}
+	
 	@PostMapping("/{id}")
 	@Transactional
 	public ResponseEntity<String> guardarTematica(@RequestBody Tematica tematica,

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.ICholloDAO;
 import com.example.demo.dto.Chollo;
+import com.example.demo.dto.Localidad;
 
 @Service
 public class CholloService implements ICholloService{
@@ -37,6 +38,12 @@ public class CholloService implements ICholloService{
 	public void deleteChollo(Integer id) {
 		// TODO Auto-generated method stub
 		cholloDAO.deleteById(id);
+	}
+
+	@Override
+	public List<Chollo> getCholloByLocalidad(Localidad localidad) {
+		// TODO Auto-generated method stub
+		return cholloDAO.findByLocalidad(localidad);
 	}
 
 }
