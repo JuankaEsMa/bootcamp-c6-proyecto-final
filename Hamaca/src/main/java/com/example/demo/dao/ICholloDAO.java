@@ -10,5 +10,5 @@ import com.example.demo.dto.Tematica;
 
 public interface ICholloDAO extends JpaRepository<Chollo,Integer>{
 	List<Chollo> findByLocalidad(Localidad localidad);
-	List<Chollo> findByTematica(Tematica tematica);
+	List<Chollo> findByTematicas(Tematica tematicas);
 }

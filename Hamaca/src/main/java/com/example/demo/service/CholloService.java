@@ -49,7 +49,7 @@ public class CholloService implements ICholloService{
 	
 	@Override
 	public List<Chollo> getCholloByTematica(Tematica tematica) {
-		return cholloDAO.findByTematica(tematica);
+		return cholloDAO.findByTematicas(tematica);
 	}
 
 }
