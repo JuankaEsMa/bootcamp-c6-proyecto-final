@@ -8,5 +8,5 @@ import com.example.demo.dto.Pais;
 
 public interface IPaisDAO extends JpaRepository<Pais,Integer>{
 
-    List<Pais> findByNombre(String nombre);
+    Pais findByNombre(String nombre);
 }

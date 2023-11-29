@@ -2,12 +2,11 @@ package com.example.demo.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IPaisDAO;
-import com.example.demo.dto.Chollo;
-import com.example.demo.dto.Localidad;
 import com.example.demo.dto.Pais;
 
 @Service
@@ -41,7 +40,7 @@ public class PaisService implements IPaisService {
 	}
 
 	@Override
-	public List<Pais> getPaisByNombre(String nombre) {
+	public Pais getPaisByNombre(String nombre) {
 		// TODO Auto-generated method stub
 		return paisDAO.findByNombre(nombre);
 	}

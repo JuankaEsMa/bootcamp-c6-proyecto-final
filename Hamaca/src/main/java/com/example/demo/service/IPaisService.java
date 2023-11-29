@@ -16,5 +16,5 @@ public interface IPaisService {
 
 	public void deletePais(Integer id);
 	
-	public List<Pais> getPaisByNombre(String nombre);
+	public Pais getPaisByNombre(String nombre);
 }

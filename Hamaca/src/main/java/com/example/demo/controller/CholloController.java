@@ -43,7 +43,8 @@ public class CholloController {
 	private EntityManager entityManager;
 
 	@GetMapping("")
-	public List<Chollo> listChollo(@RequestParam(name="localidad", required=false) Integer id_localidad , @RequestParam(name="tematica", required=false) Integer id_tematica, @RequestParam(name="pais") Integer id_pais) {
+	public List<Chollo> listChollo(@RequestParam(name="localidad", required=false) Integer id_localidad , 
+			@RequestParam(name="tematica", required=false) Integer id_tematica, @RequestParam(name="pais", required=false) Integer id_pais) {
 		// TODO Auto-generated method stub
 		ArrayList<Chollo> filtro = new ArrayList<Chollo>();
 		ArrayList<Chollo> allChollos = new ArrayList<Chollo>(cholloService.listChollo());
@@ -65,10 +66,17 @@ public class CholloController {
 			}
 		}
 		if(id_pais != null) {
-			List<Localidad> localidades = new ArrayList<Localidad>();
+			ArrayList<Chollo> filtroLocalidades = new ArrayList<Chollo>();
+			List<Localidad> localidades = localidadService.getPais(paisService.getPais(id_pais));
+			for (int i = 0; i < localidades.size(); i++) {
+				filtroLocalidades.addAll(cholloService.getCholloByLocalidad(localidades.get(i)));
+			}
+			if(filtro.isEmpty()) {
+				filtro = new ArrayList<Chollo>(filtroLocalidades);
+			}else {
+				filtro.retainAll(filtroLocalidades);
+			}
 		}
-		
-		
 		if(!filtro.isEmpty()) {
 			allChollos.retainAll(filtro);
 		}
@@ -108,7 +116,7 @@ public class CholloController {
 		// TODO Auto-generated method stub
 		cholloService.deleteChollo(id);
 	}
-	
+
 	@PostMapping("/{id}")
 	@Transactional
 	public ResponseEntity<String> guardarTematica(@RequestBody Tematica tematica,

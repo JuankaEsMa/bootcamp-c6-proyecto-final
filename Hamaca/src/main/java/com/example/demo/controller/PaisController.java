@@ -55,7 +55,7 @@ public class PaisController {
 	}
 
 	@GetMapping("pais/{nombre}")
-	public List<Pais> listPais(@PathVariable String nombre) {
+	public Pais getPaisByNombre(@PathVariable String nombre) {
 		// TODO Auto-generated method stub
 		return paisService.getPaisByNombre(nombre);
 	}
