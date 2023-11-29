@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IPaisDAO;
+import com.example.demo.dto.Chollo;
+import com.example.demo.dto.Localidad;
 import com.example.demo.dto.Pais;
 
 @Service
@@ -38,4 +40,9 @@ public class PaisService implements IPaisService {
 		paisDAO.deleteById(id);
 	}
 
+	@Override
+	public List<Pais> getPaisByNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return paisDAO.findByNombre(nombre);
+	}
 }

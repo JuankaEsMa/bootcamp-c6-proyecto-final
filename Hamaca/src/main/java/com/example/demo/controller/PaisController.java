@@ -54,4 +54,10 @@ public class PaisController {
 		paisService.deletePais(id);
 	}
 
+	@GetMapping("pais/{nombre}")
+	public List<Pais> listPais(@PathVariable String nombre) {
+		// TODO Auto-generated method stub
+		return paisService.getPaisByNombre(nombre);
+	}
+
 }

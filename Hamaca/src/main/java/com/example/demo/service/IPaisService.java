@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.dto.Chollo;
+import com.example.demo.dto.Localidad;
 import com.example.demo.dto.Pais;
 
 public interface IPaisService {
@@ -13,4 +15,6 @@ public interface IPaisService {
 	public Pais getPais(Integer id);
 
 	public void deletePais(Integer id);
+	
+	public List<Pais> getPaisByNombre(String nombre);
 }
