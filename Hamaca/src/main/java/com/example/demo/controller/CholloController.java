@@ -82,6 +82,12 @@ public class CholloController {
 		return cholloService.getCholloByLocalidad(localidad);
 	}
 	
+	@GetMapping("tematica/{id}")
+	public List<Chollo> getCholloByTematica(@PathVariable Integer id) {
+		Tematica tematica = tematicaService.getTematica(id);
+		return cholloService.getCholloByTematica(tematica);
+	}
+	
 	@PostMapping("/{id}")
 	@Transactional
 	public ResponseEntity<String> guardarTematica(@RequestBody Tematica tematica,

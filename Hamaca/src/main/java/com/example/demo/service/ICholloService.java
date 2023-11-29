@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.demo.dto.Chollo;
 import com.example.demo.dto.Localidad;
+import com.example.demo.dto.Tematica;
 
 
 public interface ICholloService {
@@ -16,4 +17,5 @@ public interface ICholloService {
 	public void deleteChollo(Integer id);
 	
 	public List<Chollo> getCholloByLocalidad(Localidad localidad);
+	public List<Chollo> getCholloByTematica(Tematica tematica);
 }
