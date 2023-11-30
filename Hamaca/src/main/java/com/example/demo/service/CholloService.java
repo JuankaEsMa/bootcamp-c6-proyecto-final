@@ -59,4 +59,10 @@ public class CholloService implements ICholloService{
 		// TODO Auto-generated method stub
 		return cholloDAO.findAllByFechaCaducidadBetween(start, fin);
 	}
+
+	@Override
+	public List<Chollo> findCholloByPrecios(Double min, Double max) {
+		// TODO Auto-generated method stub
+		return cholloDAO.findAllByPrecioBetween(min, max);
+	}
 }

@@ -20,6 +20,7 @@ public interface ICholloService {
 	
 	public List<Chollo> findCholloByLocalidad(Localidad localidad);
 	public List<Chollo> findCholloByTematica(Tematica tematica);
-	public List<Chollo> findCholloByDates (Date start, Date fin);
+	public List<Chollo> findCholloByDates (Date inicio, Date fin);
+	public List<Chollo> findCholloByPrecios (Double min, Double max);
 
 }
