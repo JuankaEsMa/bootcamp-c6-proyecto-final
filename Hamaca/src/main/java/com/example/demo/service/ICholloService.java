@@ -1,7 +1,12 @@
 package com.example.demo.service;
 
+import org.springframework.data.domain.Pageable; 
+
 import java.sql.Date;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import com.example.demo.dto.Chollo;
 import com.example.demo.dto.Localidad;
@@ -18,9 +23,11 @@ public interface ICholloService {
 
 	public void deleteChollo(Integer id);
 	
-	public List<Chollo> findCholloByLocalidad(Localidad localidad);
-	public List<Chollo> findCholloByTematica(Tematica tematica);
-	public List<Chollo> findCholloByDates (Date inicio, Date fin);
-	public List<Chollo> findCholloByPrecios (Double min, Double max);
+	public Page<Chollo> findCholloByLocalidad(Localidad localidad, Pageable pageable);
+	public Page<Chollo> findCholloByTematica(Tematica tematica, Pageable pageable);
+	public Page<Chollo> findCholloByDates (Date inicio, Date fin, Pageable pageable);
+	public Page<Chollo> findCholloByPrecios (Double min, Double max, Pageable pageable);
+
+	Page<Chollo> getPaginatedChollos(PageRequest pageable);
 
 }
