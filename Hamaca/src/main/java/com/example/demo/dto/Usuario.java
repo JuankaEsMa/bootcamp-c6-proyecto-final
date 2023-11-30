@@ -16,6 +16,10 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="Id")
 	private int id;
+	@Column(name="Password")
+	private String password;
+	@Column(name="Roles")
+	private String roles;
 	@Column(name="Nombre")
 	private String nombre;
 	@Column(name="Apellidos")
@@ -40,6 +44,18 @@ public class Usuario {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getRoles() {
+		return roles;
+	}
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 	public String getNombre() {
 		return nombre;

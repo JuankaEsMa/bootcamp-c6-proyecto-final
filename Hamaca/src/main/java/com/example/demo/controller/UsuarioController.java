@@ -1,41 +1,48 @@
 package com.example.demo.controller;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.Usuario;
 import com.example.demo.service.UsuarioService;
+import com.example.demo.dto.UserRecord;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("usuario")
+@RequestMapping("/users")
+@RequiredArgsConstructor
 public class UsuarioController {
 	@Autowired
 	UsuarioService usuarioService;
 
-	@GetMapping("")
-	public List<Usuario> listUsuario() {
-		// TODO Auto-generated method stub
-		return usuarioService.listUsuario();
-	}
+    @GetMapping("")
+    public ResponseEntity<List<UserRecord>> getAllUsers(){
+        return new ResponseEntity<>(usuarioService.getAllUsers(), HttpStatus.FOUND);
+    }
+    @PostMapping("")
+    public ResponseEntity<Usuario> add(@RequestBody Usuario usuario){
+    	System.out.println(usuario.getPassword());
+        return ResponseEntity.ok(usuarioService.add(usuario));
+    }
 
-	@PostMapping("")
-	public Usuario addUsuario(@RequestBody Usuario usuario) {
-		// TODO Auto-generated method stub
-		return usuarioService.saveUsuario(usuario);
-	}
+    @GetMapping("/{email}")
+    public Usuario getByEmail(@PathVariable("email") String email){
+        return  usuarioService.getUser(email);
+    }
+
+    @DeleteMapping("/{email}")
+    public void delete(@PathVariable("email") String email){
+    	usuarioService.delete(email);
+    }
 
 	@PutMapping("/{id}")
-	public Usuario updateUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
-		Usuario usuarioActualizar = usuarioService.getUsuario(id);
+	public Usuario updateUsuario(@PathVariable String email, @RequestBody Usuario usuario) {
+		Usuario usuarioActualizar = usuarioService.getUser(email);
 
 		usuarioActualizar.setNombre(usuario.getNombre());
 		usuarioActualizar.setApellidos(usuario.getApellidos());
@@ -50,15 +57,4 @@ public class UsuarioController {
 		return usuarioActualizar;
 	}
 
-	@GetMapping("/{id}")
-	public Usuario showUsuario(@PathVariable Integer id) {
-		// TODO Auto-generated method stub
-		return usuarioService.getUsuario(id);
-	}
-
-	@DeleteMapping("/{id}")
-	public void deleteUsuario(@PathVariable Integer id) {
-		// TODO Auto-generated method stub
-		usuarioService.deleteUsuario(id);
-	}
 }

@@ -9,4 +9,5 @@ public interface IUsuarioService {
 	public Usuario saveUsuario(Usuario usuario);
 	public Usuario getUsuario (Integer id);
 	public void deleteUsuario (Integer id);
+	//public UserDetails loadUserByUsername(String email);
 }

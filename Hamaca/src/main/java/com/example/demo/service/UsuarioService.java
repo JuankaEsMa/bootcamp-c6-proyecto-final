@@ -1,41 +1,75 @@
 package com.example.demo.service;
 
-import java.util.List;
+/**
+ * @author Jose Marin
+ */
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dao.IUsuarioDAO;
 import com.example.demo.dto.Usuario;
+import com.example.demo.exception.UserAlreadyExistsException;
+import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.dto.UserRecord;
+import com.example.demo.dao.IUsuarioDAO;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class UsuarioService implements IUsuarioService{
-
+@RequiredArgsConstructor
+public class UsuarioService implements IUserService {
 	@Autowired
-	IUsuarioDAO dao;
-	
-	@Override
-	public List<Usuario> listUsuario() {
-		// TODO Auto-generated method stub
-		return dao.findAll();
-	}
+    private IUsuarioDAO usuarioDAO;
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Override
-	public Usuario saveUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return dao.save(usuario);
-	}
+    @Override
+    public Usuario add(Usuario usuario) {
+        Optional<Usuario> theUser = usuarioDAO.findByEmail(usuario.getEmail());
+        if (theUser.isPresent()){
+            throw new UserAlreadyExistsException("A user with " +usuario.getEmail() +" already exists");
+        }
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        return usuarioDAO.save(usuario);
+    }
 
-	@Override
-	public Usuario getUsuario(Integer id) {
-		// TODO Auto-generated method stub
-		return dao.findById(id).get();
-	}
+    @Override
+    public List<UserRecord> getAllUsers() {
+        return usuarioDAO.findAll()
+                .stream()
+                .map(user -> new UserRecord(
+                        user.getId(),
+                        user.getNombre(),
+                        user.getApellidos(),
+                        user.getTelefono(),
+                        user.getDni(),
+                        user.getDireccion(),
+                        user.getEmail(),
+                        user.getFechaNacimiento(),
+                		user.getPassword())).collect(Collectors.toList());
+    }
 
-	@Override
-	public void deleteUsuario(Integer id) {
-		// TODO Auto-generated method stub
-		dao.deleteById(id);
-	}
+    @Override
+    @Transactional
+    public void delete(String email) {
+        usuarioDAO.deleteByEmail(email);
+    }
 
+    @Override
+    public Usuario getUser(String email) {
+        return usuarioDAO.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+    }
+
+    @Override
+    public Usuario update(Usuario user) {
+        user.setRoles(user.getRoles());
+        return usuarioDAO.save(user);
+    }
 }
