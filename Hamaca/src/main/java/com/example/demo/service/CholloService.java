@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.sql.Date;
 import java.util.List;
 
 
@@ -43,13 +44,19 @@ public class CholloService implements ICholloService{
 	}
 
 	@Override
-	public List<Chollo> getCholloByLocalidad(Localidad localidad) {
+	public List<Chollo> findCholloByLocalidad(Localidad localidad) {
 		// TODO Auto-generated method stub
 		return cholloDAO.findByLocalidad(localidad);
 	}
 	
 	@Override
-	public List<Chollo> getCholloByTematica(Tematica tematica) {
+	public List<Chollo> findCholloByTematica(Tematica tematica) {
 		return cholloDAO.findByTematicas(tematica);
+	}
+
+	@Override
+	public List<Chollo> findCholloByDates(Date start, Date fin) {
+		// TODO Auto-generated method stub
+		return cholloDAO.findAllByFechaCaducidadBetween(start, fin);
 	}
 }

@@ -17,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Chollo {
@@ -24,23 +26,33 @@ public class Chollo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="Id")
 	private int id;
+	
 	@Column(name="Titulo")
 	private String titulo;
+	
 	@Column(name="Imagen")
 	private String imagen;
+	
 	@Column(name="Precio_Persona")
 	private double precioPersona;
+	
 	@Column(name="Cantidad_Personas")
 	private int cantidadPersonas;
+	
 	@Column(name="Descripcion")
 	private String descripcion;
+	
 	@Column(name="Is_Deleted")
 	private boolean isDeleted;
+	
+    @Temporal(TemporalType.DATE)
 	@Column(name="Fecha_Caducidad")
 	private Date fechaCaducidad;
+	
 	@ManyToOne
 	@JoinColumn(name="Id_Localidad")
 	private Localidad localidad;
+	
 	@ManyToOne
 	@JoinColumn(name="Id_Empleado")
 	private Empleado idEmpleado;

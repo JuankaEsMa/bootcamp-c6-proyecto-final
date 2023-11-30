@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.example.demo.dto.Chollo;
@@ -17,6 +18,8 @@ public interface ICholloService {
 
 	public void deleteChollo(Integer id);
 	
-	public List<Chollo> getCholloByLocalidad(Localidad localidad);
-	public List<Chollo> getCholloByTematica(Tematica tematica);
+	public List<Chollo> findCholloByLocalidad(Localidad localidad);
+	public List<Chollo> findCholloByTematica(Tematica tematica);
+	public List<Chollo> findCholloByDates (Date start, Date fin);
+
 }
