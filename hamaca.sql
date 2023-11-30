@@ -165,7 +165,8 @@ VALUES
 ('París', 2),
 ('Berlín', 3),
 ('Roma', 4),
-('Lisboa', 5);
+('Lisboa', 5),
+('Barcelona', 1);
 
 /* Insert Chollos  */
 
@@ -175,7 +176,8 @@ VALUES
 ('Paquete turístico en París', 'imagen2.jpg', 50.75, 2, 'Visita la Ciudad Luz', '2024-06-30', 0, 2, 2),
 ('Escapada a Berlín', 'imagen3.jpg', 40.0, 4, 'Recorre la capital alemana', '2023-11-30', 0, 3, 3),
 ('Tour por Roma', 'imagen4.jpg', 35.25, 3, 'Descubre la historia romana', '2024-04-15', 0, 4, 4),
-('Estancia en Lisboa', 'imagen5.jpg', 60.9, 2, 'Disfruta del encanto portugués', '2023-10-20', 0, 5, 5);
+('Estancia en Lisboa', 'imagen5.jpg', 60.9, 2, 'Disfruta del encanto portugués', '2023-10-20', 0, 5, 5),
+('Estancia en Barcelona', 'imagen6.jpg', 60.9, 2, 'Disfruta del encanto catalan', '2023-10-20', 0, 5, 6);
 
 /* Insert Reserva */
 
