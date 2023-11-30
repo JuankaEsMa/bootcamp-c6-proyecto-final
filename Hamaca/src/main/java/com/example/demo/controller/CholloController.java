@@ -48,36 +48,40 @@ public class CholloController {
 		// TODO Auto-generated method stub
 		ArrayList<Chollo> filtro = new ArrayList<Chollo>();
 		ArrayList<Chollo> allChollos = new ArrayList<Chollo>(cholloService.listChollo());
+		boolean isFiltered = false;
 
 		if(id_localidad != null) {
 			Localidad localidad = localidadService.getLocalidad(id_localidad);
-			if(filtro.isEmpty()) {
+			if(!isFiltered) {
 				filtro = new ArrayList<Chollo>(cholloService.getCholloByLocalidad(localidad));
+				isFiltered = true;
 			}else {
 				filtro.retainAll(cholloService.getCholloByLocalidad(localidad));
 			}
 		}
 		if(id_tematica != null) {
 			Tematica tematica = tematicaService.getTematica(id_tematica);
-			if(filtro.isEmpty()) {
+			if(!isFiltered) {
 				filtro = new ArrayList<Chollo>(cholloService.getCholloByTematica(tematica));
+				isFiltered = true;
 			}else {
 				filtro.retainAll(cholloService.getCholloByTematica(tematica));
 			}
 		}
 		if(id_pais != null) {
 			ArrayList<Chollo> filtroLocalidades = new ArrayList<Chollo>();
-			List<Localidad> localidades = localidadService.getPais(paisService.getPais(id_pais));
+			List<Localidad> localidades = localidadService.findLocalidadByPais(paisService.getPais(id_pais));
 			for (int i = 0; i < localidades.size(); i++) {
 				filtroLocalidades.addAll(cholloService.getCholloByLocalidad(localidades.get(i)));
 			}
-			if(filtro.isEmpty()) {
+			if(!isFiltered) {
 				filtro = new ArrayList<Chollo>(filtroLocalidades);
+				isFiltered = true;
 			}else {
 				filtro.retainAll(filtroLocalidades);
 			}
 		}
-		if(!filtro.isEmpty()) {
+		if(isFiltered) {
 			allChollos.retainAll(filtro);
 		}
 		return allChollos;
