@@ -57,7 +57,7 @@ public class PaisController {
 	@GetMapping("pais/{nombre}")
 	public Pais getPaisByNombre(@PathVariable String nombre) {
 		// TODO Auto-generated method stub
-		return paisService.getPaisByNombre(nombre);
+		return paisService.findPaisByNombre(nombre);
 	}
 
 }

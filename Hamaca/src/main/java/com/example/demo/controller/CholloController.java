@@ -44,9 +44,9 @@ public class CholloController {
 	private EntityManager entityManager;
 
 	@GetMapping("")
-	public List<Chollo> listChollo(@RequestParam(name = "localidad", required = false) Integer id_localidad,
-			@RequestParam(name = "tematica", required = false) Integer id_tematica,
-			@RequestParam(name = "pais", required = false) Integer id_pais,
+	public List<Chollo> listChollo(@RequestParam(name = "localidad", required = false) String localidadName,
+			@RequestParam(name = "tematica", required = false) String tematicaName,
+			@RequestParam(name = "pais", required = false) String paisName,
 			@RequestParam(name = "dataInicio", required = false) Date dataInicio,
 			@RequestParam(name = "dataFinal", required = false) Date dataFinal,
 			@RequestParam(name = "precioMin", required = false) Double precioMin,
@@ -57,35 +57,43 @@ public class CholloController {
 		ArrayList<Chollo> allChollos = new ArrayList<Chollo>(cholloService.listChollo());
 		boolean isFiltered = false;
 
-		if (id_localidad != null) {
-			Localidad localidad = localidadService.getLocalidad(id_localidad);
-			if (!isFiltered) {
-				filtro = new ArrayList<Chollo>(cholloService.findCholloByLocalidad(localidad));
-				isFiltered = true;
-			} else {
-				filtro.retainAll(cholloService.findCholloByLocalidad(localidad));
-			}
-		}
-		if (id_tematica != null) {
-			Tematica tematica = tematicaService.getTematica(id_tematica);
-			if (!isFiltered) {
-				filtro = new ArrayList<Chollo>(cholloService.findCholloByTematica(tematica));
-				isFiltered = true;
-			} else {
-				filtro.retainAll(cholloService.findCholloByTematica(tematica));
-			}
-		}
-		if (id_pais != null) {
-			ArrayList<Chollo> filtroLocalidades = new ArrayList<Chollo>();
-			List<Localidad> localidades = localidadService.findLocalidadByPais(paisService.getPais(id_pais));
+		if (localidadName != null) {
+			ArrayList<Chollo> chollosByLocalidades = new ArrayList<>();
+			List<Localidad> localidades = localidadService.findLocalidadByNombre(localidadName);
 			for (int i = 0; i < localidades.size(); i++) {
-				filtroLocalidades.addAll(cholloService.findCholloByLocalidad(localidades.get(i)));
+				chollosByLocalidades.addAll(cholloService.findCholloByLocalidad(localidades.get(i)));	
 			}
 			if (!isFiltered) {
-				filtro = new ArrayList<Chollo>(filtroLocalidades);
+				filtro = new ArrayList<Chollo>(chollosByLocalidades);
 				isFiltered = true;
 			} else {
-				filtro.retainAll(filtroLocalidades);
+				filtro.retainAll(chollosByLocalidades);
+			}
+		}
+		if (tematicaName != null) {
+			ArrayList<Chollo> chollosByTematica = new ArrayList<>();
+			List<Tematica> tematicas = tematicaService.findTematicaByName(tematicaName);
+			for (int i = 0; i < tematicas.size(); i++) {
+				chollosByTematica.addAll(cholloService.findCholloByTematica(tematicas.get(i)));	
+			}
+			if (!isFiltered) {
+				filtro = new ArrayList<Chollo>(chollosByTematica);
+				isFiltered = true;
+			} else {
+				filtro.retainAll(chollosByTematica);
+			}
+		}
+		if (paisName != null) {
+			ArrayList<Chollo> cholloByPais = new ArrayList<Chollo>();
+			List<Localidad> localidades = localidadService.findLocalidadByPais(paisService.findPaisByNombre(paisName));
+			for (int i = 0; i < localidades.size(); i++) {
+				cholloByPais.addAll(cholloService.findCholloByLocalidad(localidades.get(i)));
+			}
+			if (!isFiltered) {
+				filtro = new ArrayList<Chollo>(cholloByPais);
+				isFiltered = true;
+			} else {
+				filtro.retainAll(cholloByPais);
 			}
 		}
 		if (dataInicio != null && dataFinal != null) {

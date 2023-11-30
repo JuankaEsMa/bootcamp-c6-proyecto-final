@@ -40,7 +40,7 @@ public class PaisService implements IPaisService {
 	}
 
 	@Override
-	public Pais getPaisByNombre(String nombre) {
+	public Pais findPaisByNombre(String nombre) {
 		// TODO Auto-generated method stub
 		return paisDAO.findByNombre(nombre);
 	}

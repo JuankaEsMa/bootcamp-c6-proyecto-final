@@ -63,6 +63,6 @@ public class CholloService implements ICholloService{
 	@Override
 	public List<Chollo> findCholloByPrecios(Double min, Double max) {
 		// TODO Auto-generated method stub
-		return cholloDAO.findAllByPrecioBetween(min, max);
+		return cholloDAO.findAllByPrecioPersonaBetween(min, max);
 	}
 }

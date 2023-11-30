@@ -38,4 +38,10 @@ public class TematicaService implements ITematicaService{
 		tematicaDAO.deleteById(id);
 	}
 
+	@Override
+	public List<Tematica> findTematicaByName(String name) {
+		// TODO Auto-generated method stub
+		return tematicaDAO.findAllByNombre(name);
+	}
+
 }

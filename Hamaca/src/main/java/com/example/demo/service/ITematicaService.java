@@ -10,4 +10,5 @@ public interface ITematicaService {
 	public Tematica saveTematica(Tematica tematica);
 	public Tematica getTematica(Integer id);
 	public void deleteTematica(Integer id);
+	public List<Tematica> findTematicaByName(String name);
 }
