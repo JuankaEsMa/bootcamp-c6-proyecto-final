@@ -27,10 +27,10 @@ import java.util.function.Function;
 @NoArgsConstructor
 public class JWTService {
 
-    @Value("${spring.jwt.secret}")
+    @Value("36763979244226452948404D635166546A576D5A7134743777217A25432A462D")
     private  String JWT_SECRET;
 
-    @Value("${spring.jwt.jwtExpirationInMs}")
+    @Value("1800000")
     private int JWT_EXPIRATION_TIME_IN_MILLISECONDS;
 
     public String generateToken(String userName){
