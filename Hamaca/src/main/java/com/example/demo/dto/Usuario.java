@@ -19,7 +19,7 @@ public class Usuario {
 	@Column(name="Password")
 	private String password;
 	@Column(name="Roles")
-	private String roles;
+	private String roles = "NONE";
 	@Column(name="Nombre")
 	private String nombre;
 	@Column(name="Apellidos")
@@ -105,6 +105,4 @@ public class Usuario {
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-	
-	
 }

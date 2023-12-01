@@ -14,7 +14,7 @@ import com.example.demo.dto.UsuarioRecord;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/usuario")
 @RequiredArgsConstructor
 public class UsuarioController {
 	@Autowired
