@@ -33,7 +33,8 @@ public class LibrarySecurityConfig {
             "/localidad",
             "/pais",
             "/tematica",
-            "/chollo"
+            "/chollo",
+            "/chollo/pageable"
     };
     public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario"};
 
@@ -63,7 +64,7 @@ public class LibrarySecurityConfig {
                 .requestMatchers(HttpMethod.GET, UN_SECURED_URLs).permitAll()
                 .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll().and()
                 .authorizeHttpRequests().requestMatchers(SECURED_URLs)
-                .hasAuthority("ADMIN").requestMatchers(HttpMethod.POST).authenticated()
+                .hasAuthority("ADMIN").requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
                 .and().sessionManagement(management -> management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
