@@ -23,11 +23,11 @@ public interface ICholloService {
 
 	public void deleteChollo(Integer id);
 	
-	public Page<Chollo> findCholloByLocalidad(Localidad localidad, Pageable pageable);
-	public Page<Chollo> findCholloByTematica(Tematica tematica, Pageable pageable);
-	public Page<Chollo> findCholloByDates (Date inicio, Date fin, Pageable pageable);
-	public Page<Chollo> findCholloByPrecios (Double min, Double max, Pageable pageable);
+	public List<Chollo> findCholloByLocalidad(Localidad localidad);
+	public List<Chollo> findCholloByTematica(Tematica tematica);
+	public List<Chollo> findCholloByDates (Date inicio, Date fin);
+	public List<Chollo> findCholloByPrecios (Double min, Double max);
 
-	Page<Chollo> getPaginatedChollos(PageRequest pageable);
+	public Page<Chollo> getPaginatedChollos(Pageable pageable);
 
 }

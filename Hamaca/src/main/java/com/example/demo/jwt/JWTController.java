@@ -34,12 +34,12 @@ public class JWTController {
 
     @PostMapping
     public Object getTokenForAuthenticatedUser(@RequestBody JWTAuthenticationRequest authRequest){
-    	System.out.println(authRequest.getUserName());
+    	System.out.println(authRequest.getUsername());
     	System.out.println(authRequest.getPassword());
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
+                .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         if (authentication.isAuthenticated()){
-            String token =  jwtService.generateToken(authRequest.getUserName());
+            String token =  jwtService.generateToken(authRequest.getUsername());
             JSONObject jsonObject = new JSONObject("{\"token\": \"" + token + "\"}");
             jsonObject.put("token",token );
             return jsonObject.toMap();//devuelve token por body

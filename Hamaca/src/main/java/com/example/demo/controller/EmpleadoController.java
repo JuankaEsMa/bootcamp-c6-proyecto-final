@@ -49,8 +49,7 @@ public class EmpleadoController {
 		usuarioActualizar.setDeleted(empleado.getUsuario().isDeleted());
 		usuarioActualizar.setApellidos(empleado.getUsuario().getApellidos());
 
-		empleadoActualizar.setCuentaBancaria(empleado.getCuentaBancaria());
-		empleadoActualizar.setRoles(empleado.getRoles());
+		empleadoActualizar.setCuentaBancaria(empleado.getCuentaBancaria());;
 
 		return empleadoActualizar;
 	}

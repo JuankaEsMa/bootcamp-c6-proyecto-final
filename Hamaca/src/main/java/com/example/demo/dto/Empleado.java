@@ -19,8 +19,6 @@ public class Empleado {
 	private Usuario usuario;
 	@Column(name = "Cuenta_Bancaria")
 	private String cuentaBancaria;
-	@Column(name = "Roles")
-	private String roles;
 	public Empleado() {
 		
 	}
@@ -41,12 +39,6 @@ public class Empleado {
 	}
 	public void setCuentaBancaria(String cuentaBancaria) {
 		this.cuentaBancaria = cuentaBancaria;
-	}
-	public String getRoles() {
-		return roles;
-	}
-	public void setRoles(String roles) {
-		this.roles = roles;
 	}
 	
 }

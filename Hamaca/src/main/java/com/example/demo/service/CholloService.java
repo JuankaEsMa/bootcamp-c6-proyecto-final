@@ -46,30 +46,30 @@ public class CholloService implements ICholloService{
 	}
 
 	@Override
-	public Page<Chollo> findCholloByLocalidad(Localidad localidad, Pageable pageable) {
+	public List<Chollo> findCholloByLocalidad(Localidad localidad) {
 		// TODO Auto-generated method stub
-		return cholloDAO.findByLocalidad(localidad, pageable);
+		return cholloDAO.findByLocalidad(localidad);
 	}
 	
 	@Override
-	public Page<Chollo> findCholloByTematica(Tematica tematica, Pageable pageable) {
-		return cholloDAO.findByTematicas(tematica, pageable);
+	public List<Chollo> findCholloByTematica(Tematica tematica) {
+		return cholloDAO.findByTematicas(tematica );
 	}
 
 	@Override
-	public Page<Chollo> findCholloByDates(Date start, Date fin, Pageable pageable) {
+	public List<Chollo> findCholloByDates(Date start, Date fin) {
 		// TODO Auto-generated method stub
-		return cholloDAO.findAllByFechaCaducidadBetween(start, fin, pageable);
+		return cholloDAO.findAllByFechaCaducidadBetween(start, fin );
 	}
 
 	@Override
-	public Page<Chollo> findCholloByPrecios(Double min, Double max, Pageable pageable) {
+	public List<Chollo> findCholloByPrecios(Double min, Double max) {
 		// TODO Auto-generated method stub
-		return cholloDAO.findAllByPrecioPersonaBetween(min, max, pageable);
+		return cholloDAO.findAllByPrecioPersonaBetween(min, max);
 	}
 
 	@Override
-	public Page<Chollo> getPaginatedChollos(PageRequest pageable) {
+	public Page<Chollo> getPaginatedChollos(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return cholloDAO.findAll(pageable);
 	}

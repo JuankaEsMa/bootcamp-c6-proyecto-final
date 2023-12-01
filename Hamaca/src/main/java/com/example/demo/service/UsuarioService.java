@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.Usuario;
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.dto.UserRecord;
+import com.example.demo.dto.UsuarioRecord;
 import com.example.demo.dao.IUsuarioDAO;
 
 import java.util.List;
@@ -40,19 +40,16 @@ public class UsuarioService implements IUserService {
     }
 
     @Override
-    public List<UserRecord> getAllUsers() {
+    public List<UsuarioRecord> getAllUsers() {
         return usuarioDAO.findAll()
                 .stream()
-                .map(user -> new UserRecord(
+                .map(user -> new UsuarioRecord(
                         user.getId(),
                         user.getNombre(),
                         user.getApellidos(),
-                        user.getTelefono(),
-                        user.getDni(),
-                        user.getDireccion(),
                         user.getEmail(),
-                        user.getFechaNacimiento(),
-                		user.getPassword())).collect(Collectors.toList());
+                        user.getFechaNacimiento())
+                		).collect(Collectors.toList());
     }
 
     @Override

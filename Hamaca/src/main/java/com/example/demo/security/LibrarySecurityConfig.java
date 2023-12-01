@@ -25,12 +25,14 @@ import com.example.demo.jwt.JWTAuthenticationFilter;
 @EnableWebSecurity
 public class LibrarySecurityConfig {
 
-    private static final String[] SECURED_URLs = {"/piezas/**"};
+    private static final String[] SECURED_URLs = {"/localidad/**", "/localidad"};
 
     private static final String[] UN_SECURED_URLs = {
             "/users/**",
             "/users",
-            "/login"
+            "/login",
+            "/chollo",
+            "/chollo/**"
     };
 
     @Autowired

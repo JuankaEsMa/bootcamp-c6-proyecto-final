@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.Usuario;
 import com.example.demo.service.UsuarioService;
-import com.example.demo.dto.UserRecord;
+import com.example.demo.dto.UsuarioRecord;
 
 import java.util.List;
 
@@ -21,12 +21,11 @@ public class UsuarioController {
 	UsuarioService usuarioService;
 
     @GetMapping("")
-    public ResponseEntity<List<UserRecord>> getAllUsers(){
+    public ResponseEntity<List<UsuarioRecord>> getAllUsers(){
         return new ResponseEntity<>(usuarioService.getAllUsers(), HttpStatus.FOUND);
     }
     @PostMapping("")
     public ResponseEntity<Usuario> add(@RequestBody Usuario usuario){
-    	System.out.println(usuario.getPassword());
         return ResponseEntity.ok(usuarioService.add(usuario));
     }
 

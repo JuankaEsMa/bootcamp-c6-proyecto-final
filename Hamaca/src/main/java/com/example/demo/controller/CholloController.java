@@ -2,11 +2,14 @@ package com.example.demo.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,22 +56,19 @@ public class CholloController {
 			@RequestParam(name = "dataInicio", required = false) Date dataInicio,
 			@RequestParam(name = "dataFinal", required = false) Date dataFinal,
 			@RequestParam(name = "precioMin", required = false) Double precioMin,
-			@RequestParam(name = "precioMax", required = false) Double precioMax,   
-			@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-		
-		Page<Chollo> cholloPage = cholloService.getPaginatedChollos(PageRequest.of(page, size));
-		Pageable paging = PageRequest.of(page, size);
+			@RequestParam(name = "precioMax", required = false) Double precioMax) {
+
+
 		// TODO Auto-generated method stub
 		ArrayList<Chollo> filtro = new ArrayList<Chollo>();
-		ArrayList<Chollo> allChollos = new ArrayList<Chollo>(cholloService.listChollo());
+		ArrayList<Chollo> allChollos = new ArrayList<>(cholloService.listChollo());
 		boolean isFiltered = false;
 
 		if (localidadName != null) {
 			ArrayList<Chollo> chollosByLocalidades = new ArrayList<>();
 			List<Localidad> localidades = localidadService.findLocalidadByNombre(localidadName);
 			for (int i = 0; i < localidades.size(); i++) {
-				chollosByLocalidades.addAll(cholloService.findCholloByLocalidad(localidades.get(i), paging).getContent());	
+				chollosByLocalidades.addAll(cholloService.findCholloByLocalidad(localidades.get(i)));	
 			}
 			if (!isFiltered) {
 				filtro = new ArrayList<Chollo>(chollosByLocalidades);
@@ -81,7 +81,7 @@ public class CholloController {
 			ArrayList<Chollo> chollosByTematica = new ArrayList<>();
 			List<Tematica> tematicas = tematicaService.findTematicaByName(tematicaName);
 			for (int i = 0; i < tematicas.size(); i++) {
-				chollosByTematica.addAll(cholloService.findCholloByTematica(tematicas.get(i), paging).getContent());	
+				chollosByTematica.addAll(cholloService.findCholloByTematica(tematicas.get(i)));	
 			}
 			if (!isFiltered) {
 				filtro = new ArrayList<Chollo>(chollosByTematica);
@@ -94,7 +94,7 @@ public class CholloController {
 			ArrayList<Chollo> cholloByPais = new ArrayList<Chollo>();
 			List<Localidad> localidades = localidadService.findLocalidadByPais(paisService.findPaisByNombre(paisName));
 			for (int i = 0; i < localidades.size(); i++) {
-				cholloService.findCholloByTematica(tematicaService.findTematicaByName(tematicaName).get(i), paging);
+				cholloByPais.addAll(cholloService.findCholloByLocalidad(localidades.get(i)));
 			}
 			if (!isFiltered) {
 				filtro = new ArrayList<Chollo>(cholloByPais);
@@ -105,19 +105,19 @@ public class CholloController {
 		}
 		if (dataInicio != null && dataFinal != null) {
 			if (!isFiltered) {
-				filtro = new ArrayList<Chollo>(cholloService.findCholloByDates(dataInicio, dataFinal, paging).getContent());
+				filtro = new ArrayList<Chollo>(cholloService.findCholloByDates(dataInicio, dataFinal ));
 				isFiltered = true;
 			} else {
-				filtro.retainAll(cholloService.findCholloByDates(dataInicio, dataFinal, paging).getContent());
+				filtro.retainAll(cholloService.findCholloByDates(dataInicio, dataFinal));
 			}
 		}
 
 		if (precioMin != null && precioMax != null) {
 			if (!isFiltered) {
-				filtro = new ArrayList<Chollo>(cholloService.findCholloByPrecios(precioMin, precioMax, paging).getContent());
+				filtro = new ArrayList<Chollo>(cholloService.findCholloByPrecios(precioMin, precioMax ));
 				isFiltered = true;
 			} else {
-				filtro.retainAll(cholloService.findCholloByPrecios(precioMin, precioMax, paging).getContent());
+				filtro.retainAll(cholloService.findCholloByPrecios(precioMin, precioMax));
 			}
 		}
 
@@ -125,6 +125,20 @@ public class CholloController {
 			allChollos.retainAll(filtro);
 		}
 		return allChollos;
+	}
+
+	@GetMapping("/pageable")
+	public ResponseEntity<Map<String, Object>> pageAllChollos(   
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size){
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Chollo> cholloPage = cholloService.getPaginatedChollos(pageable);
+		Map<String, Object> response = new HashMap<>();
+		response.put("currentPage", cholloPage.getNumber());
+		response.put("totalItems", cholloPage.getTotalElements());
+		response.put("totalPages", cholloPage.getTotalPages());
+		response.put("Chollos", cholloPage.getContent());
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("")
@@ -182,5 +196,5 @@ public class CholloController {
 		return ResponseEntity.ok("Tematica asociada con éxito");
 
 	}
-	
+
 }
