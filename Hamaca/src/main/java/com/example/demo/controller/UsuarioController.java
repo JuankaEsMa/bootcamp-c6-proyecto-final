@@ -35,11 +35,11 @@ public class UsuarioController {
 	@Autowired
 	private EmpleadoService empleadoService;
 	
-    @GetMapping("")
+    @GetMapping("/all")
     public ResponseEntity<List<UsuarioRecord>> getAllUsers(HttpServletRequest request){
 		Empleado empleado = cogerEmpleadoConToken(request.getHeader("Authorization"));
         if(empleado != null) {
-            return new ResponseEntity<>(usuarioService.getAllUsers(), HttpStatus.FOUND);
+            return new ResponseEntity<>(usuarioService.getAllUsers(), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
@@ -53,18 +53,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<Usuario> getByEmail(HttpServletRequest request, @PathVariable("email") String email){
+    @GetMapping("")
+    public ResponseEntity<Usuario> getByEmail(HttpServletRequest request, @RequestParam(name="email",required=false) String email){
     	
-        Usuario usuario = usuarioService.getUser(email);
         Cliente cliente = cogerClienteConToken(request.getHeader("Authorization"));
         Empleado empleado = cogerEmpleadoConToken(request.getHeader("Authorization"));
-        if(empleado != null) {
-        	return ResponseEntity.ok(usuario);
+        if(empleado != null && email != null) {
+        	return ResponseEntity.ok(usuarioService.getUser(email));
         }else if(cliente != null){
-        	if(usuario.getEmail().equals(cliente.getUsuario().getEmail())) {
-            	return ResponseEntity.ok(usuario);
-            }
+            return ResponseEntity.ok(cliente.getUsuario());
         }
         return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }

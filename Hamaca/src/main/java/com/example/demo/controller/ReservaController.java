@@ -132,8 +132,6 @@ public class ReservaController {
 			Reserva reservaBorrar = reservaService.getReserva(id);
 			if(reservasCliente.contains(reservaBorrar)) {
 				reservaService.deleteReserva(id);
-			}else {
-				//Implementar Error por Cliente intentando borrar reserva que no es suya
 			}
 		}else if(empleado != null) {
 			reservaService.deleteReserva(id);
