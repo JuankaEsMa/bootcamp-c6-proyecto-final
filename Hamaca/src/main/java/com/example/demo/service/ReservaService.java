@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IReservaDAO;
+import com.example.demo.dto.Cliente;
 import com.example.demo.dto.Reserva;
 
 @Service
@@ -36,6 +37,12 @@ public class ReservaService implements IReservaService{
 	public void deleteReserva(Integer id) {
 		// TODO Auto-generated method stub
 		reservaDAO.deleteById(id);
+	}
+
+	@Override
+	public List<Reserva> findReservaByCliente(Cliente cliente) {
+		// TODO Auto-generated method stub
+		return reservaDAO.findByCliente(cliente);
 	}
 
 }

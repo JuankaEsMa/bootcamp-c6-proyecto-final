@@ -1,9 +1,5 @@
 package com.example.demo.service;
 
-/**
- * @author Jose Marin
- */
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -55,7 +51,8 @@ public class UsuarioService implements IUserService {
     @Override
     @Transactional
     public void delete(String email) {
-        usuarioDAO.deleteByEmail(email);
+    	System.out.println("Entra");
+        //usuarioDAO.deleteByEmail(email);
     }
 
     @Override

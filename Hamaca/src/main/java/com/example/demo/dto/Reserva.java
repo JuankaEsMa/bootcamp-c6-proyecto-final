@@ -27,10 +27,10 @@ public class Reserva {
 	
 	@ManyToOne
 	@JoinColumn(name="id_Chollo")
-	private Chollo id_Chollo;
+	private Chollo chollo;
 	@ManyToOne
 	@JoinColumn(name="id_Cliente")
-	private Chollo id_Cliente;
+	private Cliente cliente;
 	
 	
 	public Reserva() {
@@ -67,17 +67,17 @@ public class Reserva {
 	public void setNota(int nota) {
 		this.nota = nota;
 	}
-	public Chollo getId_Chollo() {
-		return id_Chollo;
+	public Chollo getChollo() {
+		return chollo;
 	}
-	public void setId_Chollo(Chollo id_Chollo) {
-		this.id_Chollo = id_Chollo;
+	public void setChollo(Chollo id_Chollo) {
+		this.chollo = id_Chollo;
 	}
-	public Chollo getId_Cliente() {
-		return id_Cliente;
+	public Cliente getCliente() {
+		return cliente;
 	}
-	public void setId_Cliente(Chollo id_Cliente) {
-		this.id_Cliente = id_Cliente;
+	public void setCliente(Cliente id_Cliente) {
+		this.cliente = id_Cliente;
 	}
 	
 }

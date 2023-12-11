@@ -37,6 +37,11 @@ public class JWTService {
         Map<String, Object> claims = new HashMap<>();
         return tokenCreator(claims, userName);
     }
+    
+    public String generateEmpleadoToken(String userName) {
+        Map<String, Object> claims = new HashMap<>();
+    	return tokenCreator(claims, userName);
+    }
 
     public String tokenCreator(Map<String, Object> claims, String userName){
         return Jwts.builder()

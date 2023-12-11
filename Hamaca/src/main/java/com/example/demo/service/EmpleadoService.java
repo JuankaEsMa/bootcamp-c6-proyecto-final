@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IEmpleadoDAO;
 import com.example.demo.dto.Empleado;
+import com.example.demo.dto.Usuario;
 
 @Service
 public class EmpleadoService implements IEmpleadoService{
@@ -35,6 +36,12 @@ public class EmpleadoService implements IEmpleadoService{
 	public void deleteEmpleado(Integer id) {
 		// TODO Auto-generated method stub
 		dao.deleteById(id);
+	}
+
+	@Override
+	public Empleado findEmpleadoByUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return dao.findByUsuario(usuario);
 	}
 
 }

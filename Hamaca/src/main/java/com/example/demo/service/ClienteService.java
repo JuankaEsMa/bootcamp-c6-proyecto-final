@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IClienteDAO;
 import com.example.demo.dto.Cliente;
+import com.example.demo.dto.Usuario;
 
 @Service
 public class ClienteService implements IClienteService{
@@ -36,6 +37,12 @@ public class ClienteService implements IClienteService{
 	public void deleteCliente(Integer id) {
 		// TODO Auto-generated method stub
 		dao.deleteById(id);
+	}
+
+	@Override
+	public Cliente findClienteByUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return dao.findByUsuario(usuario);
 	}
 
 }

@@ -192,9 +192,6 @@ public class CholloController {
 			entityManager.persist(chollo);
 			entityManager.persist(tematicaGuardar);
 		}
-
 		return ResponseEntity.ok("Tematica asociada con éxito");
-
 	}
-
 }

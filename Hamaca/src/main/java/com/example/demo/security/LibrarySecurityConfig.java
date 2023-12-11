@@ -26,15 +26,31 @@ import com.example.demo.jwt.JWTAuthenticationFilter;
 @EnableWebSecurity
 public class LibrarySecurityConfig {
 
-    private static final String[] SECURED_URLs = {"/usuario/**","/empleado","/empleado/**",
-    		"/cliente","/cliente/**","/reserva","/reserva/**"};
+    private static final String[] SECURED_URLs = {"/empleado","/empleado/**"};
 
-    private static final String[] UN_SECURED_URLs = {
+    private static final String[] ALLOW_GET_URLs = {
             "/localidad",
             "/pais",
             "/tematica",
             "/chollo",
-            "/chollo/pageable"
+            "/chollo/pageable",
+            "/swagger-ui/**",
+            "/swagger-resources/*",
+            "/v3/api-docs/**",
+            "/reserva",
+            "/reserva/**",
+            "/usuario",
+            "/usuario/**",
+            "/cliente",
+            "/cliente/**"
+    };
+    private static final String[] SECURED_DELETE_URLs = {
+    		"/chollo/**",
+    		"/tematica/**",
+    		"/localidad/**",
+    		"/pais/**",
+    		"/empleado/**",
+    		"/cliente/**"
     };
     public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario"};
 
@@ -59,12 +75,13 @@ public class LibrarySecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
+        return http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, UN_SECURED_URLs).permitAll()
-                .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll().and()
-                .authorizeHttpRequests().requestMatchers(SECURED_URLs)
-                .hasAuthority("ADMIN").requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
+                .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
+                .requestMatchers(SECURED_URLs).hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE,SECURED_DELETE_URLs).hasAuthority("ADMIN")
                 .and().sessionManagement(management -> management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
