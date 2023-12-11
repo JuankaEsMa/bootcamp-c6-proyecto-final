@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,14 +51,17 @@ public class CholloController {
 	private EntityManager entityManager;
 
 	@GetMapping("")
-	public List<Chollo> listChollo(@RequestParam(name = "localidad", required = false) String localidadName,
+	public ResponseEntity<Map<String, Object>> listChollo(@RequestParam(name = "localidad", required = false) String localidadName,
 			@RequestParam(name = "tematica", required = false) String tematicaName,
 			@RequestParam(name = "pais", required = false) String paisName,
 			@RequestParam(name = "dataInicio", required = false) Date dataInicio,
 			@RequestParam(name = "dataFinal", required = false) Date dataFinal,
 			@RequestParam(name = "precioMin", required = false) Double precioMin,
-			@RequestParam(name = "precioMax", required = false) Double precioMax) {
+			@RequestParam(name = "precioMax", required = false) Double precioMax,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
 
+		Pageable pageable = PageRequest.of(page, size);
 
 		// TODO Auto-generated method stub
 		ArrayList<Chollo> filtro = new ArrayList<Chollo>();
@@ -124,21 +128,21 @@ public class CholloController {
 		if (isFiltered) {
 			allChollos.retainAll(filtro);
 		}
-		return allChollos;
-	}
+		int start = size*page;
+		int end = Math.min((start + pageable.getPageSize()), allChollos.size());
+		try {
+		    Page<Chollo> cholloPage = new PageImpl<Chollo>(allChollos.subList(start, end), pageable, allChollos.size());
+		    Map<String, Object> response = new HashMap<>();
+			response.put("currentPage", cholloPage.getNumber());
+			response.put("totalItems", cholloPage.getTotalElements());
+			response.put("totalPages", cholloPage.getTotalPages());
+			response.put("Chollos", cholloPage.getContent());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}catch(Exception e) {
+			System.out.println(e.getCause());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 
-	@GetMapping("/pageable")
-	public ResponseEntity<Map<String, Object>> pageAllChollos(   
-			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size){
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Chollo> cholloPage = cholloService.getPaginatedChollos(pageable);
-		Map<String, Object> response = new HashMap<>();
-		response.put("currentPage", cholloPage.getNumber());
-		response.put("totalItems", cholloPage.getTotalElements());
-		response.put("totalPages", cholloPage.getTotalPages());
-		response.put("Chollos", cholloPage.getContent());
-		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("")

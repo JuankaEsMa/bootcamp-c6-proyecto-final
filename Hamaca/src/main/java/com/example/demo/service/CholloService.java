@@ -1,18 +1,15 @@
 package com.example.demo.service;
 
 import java.sql.Date;
+
 import java.util.List;
 
-import org.springframework.data.domain.Pageable; 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.ICholloDAO;
 import com.example.demo.dto.Chollo;
 import com.example.demo.dto.Localidad;
-import com.example.demo.dto.Pais;
 import com.example.demo.dto.Tematica;
 
 @Service
@@ -66,12 +63,6 @@ public class CholloService implements ICholloService{
 	public List<Chollo> findCholloByPrecios(Double min, Double max) {
 		// TODO Auto-generated method stub
 		return cholloDAO.findAllByPrecioPersonaBetween(min, max);
-	}
-
-	@Override
-	public Page<Chollo> getPaginatedChollos(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return cholloDAO.findAll(pageable);
 	}
 
 }
