@@ -31,8 +31,11 @@ public class LibrarySecurityConfig {
 
     private static final String[] ALLOW_GET_URLs = {
             "/localidad",
+            "/localidad/**",
             "/pais",
+            "/pais/**",
             "/tematica",
+            "/tematica/**",
             "/chollo",
             "/chollo/pageable",
             "/swagger-ui/**",
