@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Chollo;
 import com.example.demo.dto.Localidad;
-import com.example.demo.dto.Pais;
 import com.example.demo.dto.Tematica;
 import com.example.demo.service.CholloService;
 import com.example.demo.service.LocalidadService;

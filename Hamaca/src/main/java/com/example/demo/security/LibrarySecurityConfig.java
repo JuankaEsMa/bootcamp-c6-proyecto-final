@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -52,7 +53,7 @@ public class LibrarySecurityConfig {
     		"/empleado/**",
     		"/cliente/**"
     };
-    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario"};
+    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva"};
 
     @Autowired
     private JWTAuthenticationFilter authenticationFilter;
