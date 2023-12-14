@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
          return openApi;
     }
     private SecurityScheme createAPIKeyScheme() {
-        return new SecurityScheme().type(SecurityScheme.Type.APIKEY)
+        return new SecurityScheme().type(SecurityScheme.Type.HTTP)
             .bearerFormat("JWT")
             .scheme("bearer")
             .description("Authorize Client");
