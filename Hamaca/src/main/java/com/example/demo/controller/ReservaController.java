@@ -2,9 +2,13 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +24,6 @@ import com.example.demo.dto.Cliente;
 import com.example.demo.dto.Empleado;
 import com.example.demo.dto.Reserva;
 import com.example.demo.dto.Usuario;
-import com.example.demo.jwt.JWTService;
 import com.example.demo.service.CholloService;
 import com.example.demo.service.ClienteService;
 import com.example.demo.service.EmpleadoService;
@@ -35,8 +38,6 @@ public class ReservaController {
 	@Autowired
 	ReservaService reservaService;
 	@Autowired
-    private JWTService jwtService;
-	@Autowired
 	private UsuarioService usuarioService;
 	@Autowired
 	private ClienteService clienteService;
@@ -48,11 +49,11 @@ public class ReservaController {
 	@GetMapping("")
 	public ResponseEntity<List<Reserva>> listReserva(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		Cliente cliente = cogerClienteConToken(request.getHeader("Authorization"));
+		Cliente cliente = cogerClienteConToken();
+
 		if(cliente != null)	{
             return ResponseEntity.ok(reservaService.findReservaByCliente(cliente));
 		}else {
-			//Implementar Empleado puede acceder a todos
 			return ResponseEntity.ok(reservaService.listReserva());
 		}
 	}
@@ -62,7 +63,7 @@ public class ReservaController {
 			@RequestParam(name="numNoches", required=true) Integer numNoches, 
 			@RequestParam(name="numPersonas", required=true) Integer numPersonas) {
 		// TODO Auto-generated method stub
-		Cliente cliente = cogerClienteConToken(request.getHeader("Authorization"));
+		Cliente cliente = cogerClienteConToken();
 		Reserva reserva = new Reserva();
 		Chollo chollo = cholloService.getChollo(idChollo); 
 //		Calendar cal = Calendar.getInstance();
@@ -80,8 +81,8 @@ public class ReservaController {
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<Reserva> updateReserva(HttpServletRequest request, @PathVariable Integer id, @RequestBody Reserva reserva) {
-		Cliente cliente = cogerClienteConToken(request.getHeader("Authorization"));
-		Empleado empleado = cogerEmpleadoConToken(request.getHeader("Authorization"));
+		Cliente cliente = cogerClienteConToken();
+		Empleado empleado = cogerEmpleadoConToken();
 		Reserva reservaActualizar = reservaService.getReserva(id);
 
 		if(cliente != null) {
@@ -109,8 +110,8 @@ public class ReservaController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Reserva> showReserva(HttpServletRequest request, @PathVariable Integer id) {
 		// TODO Auto-generated method stub
-		Cliente cliente = cogerClienteConToken(request.getHeader("Authorization"));
-		Empleado empleado = cogerEmpleadoConToken(request.getHeader("Authorization"));
+		Cliente cliente = cogerClienteConToken();
+		Empleado empleado = cogerEmpleadoConToken();
 		if(cliente != null) {
 			List<Reserva> reservasCliente = reservaService.findReservaByCliente(cliente);
 			Reserva reservaMostrar = reservaService.getReserva(id);
@@ -125,8 +126,8 @@ public class ReservaController {
 	@DeleteMapping("/{id}")
 	public void deleteReserva(HttpServletRequest request, @PathVariable Integer id) {
 		// TODO Auto-generated method stub
-		Cliente cliente = cogerClienteConToken(request.getHeader("Authorization"));
-		Empleado empleado = cogerEmpleadoConToken(request.getHeader("Authorization"));
+		Cliente cliente = cogerClienteConToken();
+		Empleado empleado = cogerEmpleadoConToken();
 		if(cliente != null) {
 			List<Reserva> reservasCliente = reservaService.findReservaByCliente(cliente);
 			Reserva reservaBorrar = reservaService.getReserva(id);
@@ -137,36 +138,18 @@ public class ReservaController {
 			reservaService.deleteReserva(id);
 		}
 	}
-	public Cliente cogerClienteConToken(String authHeader) {
-		String token = null;
-		String userName = null;
-		if(authHeader != null && authHeader.startsWith("Bearer ")) {
-			try {
-				token = authHeader.substring(7);
-	            userName = jwtService.extractUsernameFromToken(token);
-	            Usuario usuario = usuarioService.getUser(userName);
-	            Cliente cliente = clienteService.findClienteByUsuario(usuario);
-	    		return cliente;
-			}catch(Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return null;
+	public Cliente cogerClienteConToken() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails =(UserDetails)auth.getPrincipal();
+		Usuario usuario = usuarioService.getUser(userDetails.getUsername());
+		Cliente cliente = clienteService.findClienteByUsuario(usuario);
+		return cliente;
 	}
-	public Empleado cogerEmpleadoConToken(String authHeader) {
-		String token = null;
-		String userName = null;
-		if(authHeader != null && authHeader.startsWith("Bearer ")) {
-			try {
-				token = authHeader.substring(7);
-	            userName = jwtService.extractUsernameFromToken(token);
-	            Usuario usuario = usuarioService.getUser(userName);
-	            Empleado empleado = empleadoService.findEmpleadoByUsuario(usuario);
-	    		return empleado;
-			}catch(Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return null;
+	public Empleado cogerEmpleadoConToken() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails =(UserDetails)auth.getPrincipal();
+		Usuario usuario = usuarioService.getUser(userDetails.getUsername());
+		Empleado empleado = empleadoService.findEmpleadoByUsuario(usuario);
+		return empleado;
 	}
 }

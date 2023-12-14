@@ -20,14 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.demo.jwt.JWTAuthenticationFilter;
 
-/**
- * @author Samson Effes
- */
 @Configuration
 @EnableWebSecurity
 public class LibrarySecurityConfig {
 
-    private static final String[] SECURED_URLs = {"/empleado","/empleado/**"};
+    private static final String[] SECURED_URLs = {"/empleado","/empleado/**", "/usuario/addEmpleado"};
 
     private static final String[] ALLOW_GET_URLs = {
             "/localidad",
