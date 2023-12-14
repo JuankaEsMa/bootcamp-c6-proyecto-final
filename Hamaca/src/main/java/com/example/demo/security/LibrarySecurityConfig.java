@@ -1,6 +1,8 @@
 package com.example.demo.security;
 
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Bean;
@@ -101,7 +103,7 @@ public class LibrarySecurityConfig {
 
          CorsConfiguration configuration = new CorsConfiguration();
          configuration.addAllowedOrigin("*");  // Allow all origins or Arrays.asList("http://localhost:4200","http://localhost:3000")
-         configuration.addAllowedMethod("*");      // Allow all methods or List.of("GET", "POST", "PUT", "DELETE")
+         configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));      // Allow all methods or List.of("GET", "POST", "PUT", "DELETE")
          configuration.addAllowedHeader("*");      // Allow all headers
          configuration.setAllowCredentials(true);  // Allow sending of authentication cookies
          UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
