@@ -102,11 +102,11 @@ public class LibrarySecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
 
          CorsConfiguration configuration = new CorsConfiguration();
-         configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));      // Allow all methods or List.of("GET", "POST", "PUT", "DELETE")
-         configuration.addAllowedHeader("*");      // Allow all headers
-         configuration.setAllowCredentials(true);  // Allow sending of authentication cookies
+         configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));
+         configuration.addAllowedHeader("*");
+         configuration.setAllowCredentials(true);
          UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-         source.registerCorsConfiguration("/**", configuration);
+         source.registerCorsConfiguration("/v3/api-docs", configuration);
          return source;
      }
     
