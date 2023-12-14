@@ -129,7 +129,7 @@ public class CholloController {
 			allChollos.retainAll(filtro);
 		}
 		int start = size*page;
-		int end = Math.min((start + pageable.getPageSize()), allChollos.size());
+		int end = Math.min((start + size), allChollos.size());
 		try {
 		    Page<Chollo> cholloPage = new PageImpl<Chollo>(allChollos.subList(start, end), pageable, allChollos.size());
 		    Map<String, Object> response = new HashMap<>();
