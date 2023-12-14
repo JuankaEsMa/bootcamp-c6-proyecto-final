@@ -23,10 +23,7 @@ public class SwaggerConfiguration {
                 .version("1.0")
                 .license(new License().name("License of API")
                     .url("API license URL")));
-    	Server server = new Server();
-    	server.setUrl("https://proyecto-final-backend-production-c6e8.up.railway.app/");
-    	openApi.addServersItem(server);
-    	System.out.println("SERVIDOR CUSTOM" + server.toString());
+
         return openApi;
     }
     private SecurityScheme createAPIKeyScheme() {
