@@ -79,14 +79,15 @@ public class LibrarySecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
-                .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
-                .requestMatchers(SECURED_URLs).hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.DELETE,SECURED_DELETE_URLs).hasAuthority("ADMIN")
-                .and().sessionManagement(management -> management
+        return http.csrf(csrf -> csrf.disable())
+        		.cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth-> auth
+        				.requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
+                        .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
+                        .requestMatchers(SECURED_URLs).hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,SECURED_DELETE_URLs).hasAuthority("ADMIN")
+                        )
+                .sessionManagement(management -> management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
