@@ -17,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.demo.jwt.JWTAuthenticationFilter;
 
@@ -76,7 +79,7 @@ public class LibrarySecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
+        return http.csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
                 .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
@@ -89,6 +92,21 @@ public class LibrarySecurityConfig {
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+    
+ // CORS Configuration Bean
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+
+         CorsConfiguration configuration = new CorsConfiguration();
+         configuration.addAllowedOrigin("");  // Allow all origins or Arrays.asList("http://localhost:4200","http://localhost:3000")
+         configuration.addAllowedMethod("");      // Allow all methods or List.of("GET", "POST", "PUT", "DELETE")
+         configuration.addAllowedHeader("*");      // Allow all headers
+         configuration.setAllowCredentials(true);  // Allow sending of authentication cookies
+         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+         source.registerCorsConfiguration("/**", configuration);
+         return source;
+     }
+    
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
