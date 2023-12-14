@@ -69,8 +69,10 @@ public class UsuarioController {
         Empleado empleado = cogerEmpleadoConToken();
         if(empleado != null && email != null) {
         	return ResponseEntity.ok(usuarioService.getUser(email));
-        }else if(cliente != null || empleado != null){
+        }else if(cliente != null){
             return ResponseEntity.ok(cliente.getUsuario());
+        }else if(empleado != null) {
+            return ResponseEntity.ok(empleado.getUsuario());
         }
         return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
