@@ -9,6 +9,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 
 @Configuration
 public class SwaggerConfiguration {
@@ -22,7 +23,10 @@ public class SwaggerConfiguration {
                 .version("1.0")
                 .license(new License().name("License of API")
                     .url("API license URL")));
-         return openApi;
+    	Server server = new Server();
+    	server.setUrl("https://proyecto-final-backend-production-c6e8.up.railway.app/");
+    	openApi.addServersItem(server);
+        return openApi;
     }
     private SecurityScheme createAPIKeyScheme() {
         return new SecurityScheme().type(SecurityScheme.Type.HTTP)
