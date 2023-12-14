@@ -68,7 +68,7 @@ public class CholloController {
 		ArrayList<Chollo> allChollos = new ArrayList<>(cholloService.listChollo());
 		boolean isFiltered = false;
 
-		if (localidadName != "" || localidadName != null) {
+		if (localidadName != null) {
 			ArrayList<Chollo> chollosByLocalidades = new ArrayList<>();
 			List<Localidad> localidades = localidadService.findLocalidadByNombre(localidadName);
 			for (int i = 0; i < localidades.size(); i++) {
