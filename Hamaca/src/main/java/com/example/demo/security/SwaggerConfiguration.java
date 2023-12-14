@@ -15,13 +15,15 @@ public class SwaggerConfiguration {
 
     @Bean
     public OpenAPI openAPI() {
-        return new OpenAPI().addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
+    	OpenAPI openApi = new OpenAPI().addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
             .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()))
             .info(new Info().title("Hamaca")
                 .description("description of API.")
                 .version("1.0")
                 .license(new License().name("License of API")
                     .url("API license URL")));
+         openApi.getServers().get(0).url("https://proyecto-final-backend-production-c6e8.up.railway.app/");
+         return openApi;
     }
     private SecurityScheme createAPIKeyScheme() {
         return new SecurityScheme().type(SecurityScheme.Type.HTTP)
