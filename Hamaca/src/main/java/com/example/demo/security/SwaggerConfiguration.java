@@ -22,7 +22,6 @@ public class SwaggerConfiguration {
                 .version("1.0")
                 .license(new License().name("License of API")
                     .url("API license URL")));
-         openApi.getServers().get(0).url("https://proyecto-final-backend-production-c6e8.up.railway.app/");
          return openApi;
     }
     private SecurityScheme createAPIKeyScheme() {
