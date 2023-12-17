@@ -54,21 +54,22 @@ public class CholloController {
 	public ResponseEntity<Map<String, Object>> listChollo(@RequestParam(name = "localidad", required = false) String localidadName,
 			@RequestParam(name = "tematica", required = false) String tematicaName,
 			@RequestParam(name = "pais", required = false) String paisName,
-			@RequestParam(name = "dataInicio", required = false) Date dataInicio,
-			@RequestParam(name = "dataFinal", required = false) Date dataFinal,
+			@RequestParam(name = "dataInicio", required = false) String dataInicioString,
+			@RequestParam(name = "dataFinal", required = false) String dataFinalString,
 			@RequestParam(name = "precioMin", required = false) Double precioMin,
 			@RequestParam(name = "precioMax", required = false) Double precioMax,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
 
 		Pageable pageable = PageRequest.of(page, size);
-
+		
+		
 		// TODO Auto-generated method stub
 		ArrayList<Chollo> filtro = new ArrayList<Chollo>();
 		ArrayList<Chollo> allChollos = new ArrayList<>(cholloService.listChollo());
 		boolean isFiltered = false;
-
-		if (localidadName != null) {
+		
+		if (localidadName != null && !localidadName.isBlank()) {
 			ArrayList<Chollo> chollosByLocalidades = new ArrayList<>();
 			List<Localidad> localidades = localidadService.findLocalidadByNombre(localidadName);
 			for (int i = 0; i < localidades.size(); i++) {
@@ -81,7 +82,7 @@ public class CholloController {
 				filtro.retainAll(chollosByLocalidades);
 			}
 		}
-		if (tematicaName != null) {
+		if (tematicaName != null && !tematicaName.isBlank()) {
 			ArrayList<Chollo> chollosByTematica = new ArrayList<>();
 			List<Tematica> tematicas = tematicaService.findTematicaByName(tematicaName);
 			for (int i = 0; i < tematicas.size(); i++) {
@@ -94,7 +95,7 @@ public class CholloController {
 				filtro.retainAll(chollosByTematica);
 			}
 		}
-		if (paisName != null) {
+		if (paisName != null && !paisName.isBlank()) {
 			ArrayList<Chollo> cholloByPais = new ArrayList<Chollo>();
 			List<Localidad> localidades = localidadService.findLocalidadByPais(paisService.findPaisByNombre(paisName));
 			for (int i = 0; i < localidades.size(); i++) {
@@ -107,12 +108,19 @@ public class CholloController {
 				filtro.retainAll(cholloByPais);
 			}
 		}
-		if (dataInicio != null && dataFinal != null) {
-			if (!isFiltered) {
-				filtro = new ArrayList<Chollo>(cholloService.findCholloByDates(dataInicio, dataFinal ));
-				isFiltered = true;
-			} else {
-				filtro.retainAll(cholloService.findCholloByDates(dataInicio, dataFinal));
+		if (dataInicioString != null && dataFinalString != null && !dataInicioString.isBlank() && !dataFinalString.isBlank()) {
+			try {
+				Date dataInicio = Date.valueOf(dataInicioString);
+				Date dataFinal = Date.valueOf(dataFinalString);
+				if (!isFiltered) {
+					filtro = new ArrayList<Chollo>(cholloService.findCholloByDates(dataInicio, dataFinal ));
+					isFiltered = true;
+				} else {
+					filtro.retainAll(cholloService.findCholloByDates(dataInicio, dataFinal));
+				}
+			}catch(Exception e) {
+				System.out.println("Mensaje error fechas: " + e.toString());
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 			}
 		}
 
