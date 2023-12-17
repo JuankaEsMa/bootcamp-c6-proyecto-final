@@ -82,7 +82,7 @@ public class LibrarySecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
-        		.cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth-> auth
+        		.cors(cors -> cors.disable()).authorizeHttpRequests(auth-> auth
         				.requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
                         .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
                         .requestMatchers(SECURED_URLs).hasAuthority("ADMIN")
