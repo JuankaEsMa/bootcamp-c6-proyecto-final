@@ -39,7 +39,7 @@ public class LibrarySecurityConfig {
             "/tematica",
             "/tematica/**",
             "/chollo",
-            "/chollo/pageable",
+            "/chollo/**",
             "/swagger-ui/**",
             "/swagger-resources/*",
             "/v3/api-docs/**",
