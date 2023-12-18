@@ -101,15 +101,13 @@ public class LibrarySecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 
-         CorsConfiguration configuration = new CorsConfiguration();
-         configuration.addAllowedOrigin("*");
-         configuration.addAllowedOrigin("http://localhost:4200");
-         configuration.addAllowedMethod("GET");
-         configuration.addAllowedHeader("*");
-         configuration.setAllowCredentials(true);
-         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-         source.registerCorsConfiguration("/**", configuration);
-         return source;
+    	CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
      }
     
     @Bean
