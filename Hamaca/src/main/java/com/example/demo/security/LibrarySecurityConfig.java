@@ -102,6 +102,8 @@ public class LibrarySecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
 
          CorsConfiguration configuration = new CorsConfiguration();
+         configuration.addAllowedOrigin("*");
+         configuration.addAllowedOrigin("http://localhost:4200");
          configuration.addAllowedOrigin("https://proyecto-final-backend-production-c6e8.up.railway.app/swagger-ui/index.html#/**");
          configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));
          configuration.addAllowedHeader("*");
