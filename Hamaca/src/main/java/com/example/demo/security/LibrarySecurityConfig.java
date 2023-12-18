@@ -103,8 +103,9 @@ public class LibrarySecurityConfig {
 
          CorsConfiguration configuration = new CorsConfiguration();
          configuration.addAllowedOrigin("*");
-         configuration.addAllowedMethod("*");
-         configuration.addAllowedHeader("");
+         configuration.addAllowedOrigin("http://localhost:4200");
+         configuration.addAllowedMethod("GET");
+         configuration.addAllowedHeader("*");
          configuration.setAllowCredentials(true);
          UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
          source.registerCorsConfiguration("/**", configuration);
