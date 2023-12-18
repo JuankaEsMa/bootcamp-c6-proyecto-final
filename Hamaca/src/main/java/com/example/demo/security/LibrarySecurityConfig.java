@@ -102,8 +102,8 @@ public class LibrarySecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
 
          CorsConfiguration configuration = new CorsConfiguration();
-         configuration.addAllowedOrigin("");
-         configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));
+         configuration.addAllowedOrigin("*");
+         configuration.addAllowedMethod("*");
          configuration.addAllowedHeader("");
          configuration.setAllowCredentials(true);
          UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
