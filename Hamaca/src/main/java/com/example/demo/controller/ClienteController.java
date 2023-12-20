@@ -46,7 +46,7 @@ public class ClienteController {
 		return clienteService.listCliente();
 	}
 	
-	@GetMapping 
+	@GetMapping("/myCliente")
 	public ResponseEntity<Cliente> getMyCliente(){
 		Cliente cliente = cogerClienteConToken();
 		if(cliente != null) {
