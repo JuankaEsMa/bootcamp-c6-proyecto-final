@@ -58,7 +58,7 @@ public class LibrarySecurityConfig {
     		"/empleado/**",
     		"/cliente/**"
     };
-    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva","/cliente","/cliente/addCholloFav"};
+    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva"};
 
     @Autowired
     private JWTAuthenticationFilter authenticationFilter;
@@ -83,11 +83,11 @@ public class LibrarySecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
         		.cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth-> auth
+        				.requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
+                        .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
                         .requestMatchers(SECURED_URLs).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,SECURED_DELETE_URLs).hasAuthority("ADMIN")
-        				.requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
-                        .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
                         )
                 .sessionManagement(management -> management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
