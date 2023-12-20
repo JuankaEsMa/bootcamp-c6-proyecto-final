@@ -3,7 +3,11 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +22,7 @@ import com.example.demo.dto.Cliente;
 import com.example.demo.dto.Usuario;
 import com.example.demo.service.CholloService;
 import com.example.demo.service.ClienteService;
+import com.example.demo.service.UsuarioService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -27,6 +32,8 @@ import jakarta.transaction.Transactional;
 @RequestMapping("cliente")
 public class ClienteController {
 
+	@Autowired
+	private UsuarioService usuarioService;
 	@Autowired
 	ClienteService clienteService;
 	@Autowired
@@ -74,7 +81,7 @@ public class ClienteController {
 		// TODO Auto-generated method stub
 		clienteService.deleteCliente(id);
 	}
-	@PostMapping("/{id}")
+	@PostMapping("/addCholloFav")
 	@Transactional
 	public ResponseEntity<String> guardarFavorito(@RequestBody Chollo chollo,
 			@PathVariable(name = "id") Integer id) {
@@ -82,17 +89,26 @@ public class ClienteController {
 		Chollo cholloGuardar = cholloService.getChollo(chollo.getId());
 
 		// Obtiene el chollo por su ID
-		Cliente cliente = clienteService.getCliente(id);
+		Cliente cliente = cogerClienteConToken();
 
 		// Asocia la tematica con el chollo
-		if (cholloGuardar != null) {
+		if (cholloGuardar != null && cliente != null) {
 			cliente.getChollosFavoritos().add(cholloGuardar);
 			cholloGuardar.getClientesFavoritos().add(cliente);
 			entityManager.persist(cliente);
 			entityManager.persist(cholloGuardar);
+			return ResponseEntity.ok("Cliente asociado con éxito");
+		}else {
+			return new ResponseEntity<>("No estás Logeado", HttpStatus.FORBIDDEN);
 		}
 
-		return ResponseEntity.ok("Cliente asociado con éxito");
 
+	}
+	public Cliente cogerClienteConToken() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails =(UserDetails)auth.getPrincipal();
+		Usuario usuario = usuarioService.getUser(userDetails.getUsername());
+		Cliente cliente = clienteService.findClienteByUsuario(usuario);
+		return cliente;
 	}
 }
