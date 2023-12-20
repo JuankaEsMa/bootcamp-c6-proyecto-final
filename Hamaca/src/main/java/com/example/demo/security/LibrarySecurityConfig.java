@@ -58,7 +58,7 @@ public class LibrarySecurityConfig {
     		"/empleado/**",
     		"/cliente/**"
     };
-    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva","/cliente/addCholloFav"};
+    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva","/cliente","/cliente/addCholloFav"};
 
     @Autowired
     private JWTAuthenticationFilter authenticationFilter;
