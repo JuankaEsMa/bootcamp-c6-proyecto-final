@@ -13,6 +13,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +27,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Chollo;
+import com.example.demo.dto.Empleado;
 import com.example.demo.dto.Localidad;
 import com.example.demo.dto.Tematica;
+import com.example.demo.dto.Usuario;
 import com.example.demo.service.CholloService;
+import com.example.demo.service.EmpleadoService;
 import com.example.demo.service.LocalidadService;
 import com.example.demo.service.PaisService;
 import com.example.demo.service.TematicaService;
+import com.example.demo.service.UsuarioService;
+
 import org.springframework.data.domain.Pageable; 
 
 import jakarta.persistence.EntityManager;
@@ -47,6 +55,10 @@ public class CholloController {
 	LocalidadService localidadService;
 	@Autowired
 	PaisService paisService;
+	@Autowired
+	EmpleadoService empleadoService;
+	@Autowired
+	UsuarioService usuarioService;
 	@Autowired
 	private EntityManager entityManager;
 
@@ -164,26 +176,36 @@ public class CholloController {
 	}
 
 	@PostMapping("")
-	public Chollo addChollo(@RequestBody Chollo chollo) {
+	public ResponseEntity<Chollo> addChollo(@RequestBody Chollo chollo) {
 		// TODO Auto-generated method stub
-		return cholloService.saveChollo(chollo);
+		Empleado empleado = cogerEmpleadoConToken();
+		if(empleado != null) {
+			chollo.setIdEmpleado(empleado);
+			return ResponseEntity.ok(cholloService.saveChollo(chollo));
+		}else {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		}
 	}
 
 	@PutMapping("/{id}")
-	public Chollo updateChollo(@PathVariable Integer id, @RequestBody Chollo chollo) {
+	public ResponseEntity<Chollo> updateChollo(@PathVariable Integer id, @RequestBody Chollo chollo) {
 		Chollo cholloActualizar = cholloService.getChollo(id);
-
-		cholloActualizar.setTitulo(chollo.getTitulo());
-		cholloActualizar.setImagen(chollo.getImagen());
-		cholloActualizar.setPrecioPersona(chollo.getPrecioPersona());
-		cholloActualizar.setCantidadPersonas(chollo.getCantidadPersonas());
-		cholloActualizar.setDescripcion(chollo.getDescripcion());
-		cholloActualizar.setDeleted(chollo.isDeleted());
-		cholloActualizar.setFechaCaducidad(chollo.getFechaCaducidad());
-		cholloActualizar.setLocalidad(chollo.getLocalidad());
-
-		return cholloActualizar;
-	}
+		Empleado empleado = cogerEmpleadoConToken();
+		if(empleado != null) {
+			cholloActualizar.setTitulo(chollo.getTitulo());
+			cholloActualizar.setImagen(chollo.getImagen());
+			cholloActualizar.setPrecioPersona(chollo.getPrecioPersona());
+			cholloActualizar.setCantidadPersonas(chollo.getCantidadPersonas());
+			cholloActualizar.setDescripcion(chollo.getDescripcion());
+			cholloActualizar.setDeleted(chollo.isDeleted());
+			cholloActualizar.setFechaCaducidad(chollo.getFechaCaducidad());
+			cholloActualizar.setLocalidad(chollo.getLocalidad());
+			cholloActualizar.setIdEmpleado(empleado);
+			return ResponseEntity.ok(cholloService.saveChollo(chollo));
+		}else {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		}
+			}
 
 	@GetMapping("/{id}")
 	public Chollo showChollo(@PathVariable Integer id) {
@@ -215,5 +237,13 @@ public class CholloController {
 			entityManager.persist(tematicaGuardar);
 		}
 		return ResponseEntity.ok("Tematica asociada con éxito");
+	}
+	
+	public Empleado cogerEmpleadoConToken() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails =(UserDetails)auth.getPrincipal();
+		Usuario usuario = usuarioService.getUser(userDetails.getUsername());
+		Empleado empleado = empleadoService.findEmpleadoByUsuario(usuario);
+		return empleado;
 	}
 }
