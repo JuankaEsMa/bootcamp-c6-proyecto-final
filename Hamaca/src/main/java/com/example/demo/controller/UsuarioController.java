@@ -48,6 +48,7 @@ public class UsuarioController {
     @PostMapping("")
     public ResponseEntity<Usuario> add(@RequestBody Usuario usuario){
     	Cliente cliente =  new Cliente();
+    	usuario.setRoles("USER");
     	usuarioService.add(usuario);
     	cliente.setUsuario(usuario);
     	clienteService.saveCliente(cliente);

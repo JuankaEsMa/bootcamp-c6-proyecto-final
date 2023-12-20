@@ -93,9 +93,8 @@ public class ClienteController {
 	}
 	@PostMapping("/addCholloFav")
 	@Transactional
-	public ResponseEntity<String> guardarFavorito(@RequestBody Chollo chollo,
-			@PathVariable(name = "id") Integer id) {
-		// Guarda la tematica
+	public ResponseEntity<String> guardarFavorito(@RequestBody Chollo chollo) {
+		System.out.println("ENTRAMOS");
 		Chollo cholloGuardar = cholloService.getChollo(chollo.getId());
 
 		// Obtiene el chollo por su ID
