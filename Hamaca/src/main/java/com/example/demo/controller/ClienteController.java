@@ -45,6 +45,16 @@ public class ClienteController {
 	public List<Cliente> listCliente(){
 		return clienteService.listCliente();
 	}
+	
+	@GetMapping 
+	public ResponseEntity<Cliente> getMyCliente(){
+		Cliente cliente = cogerClienteConToken();
+		if(cliente != null) {
+			return ResponseEntity.ok(cliente);
+		}else {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		}
+	}
 	 
 	@PostMapping("")
 	public Cliente addCliente(@RequestBody Cliente cliente) {
