@@ -21,6 +21,7 @@ public interface ICholloService {
 	public List<Chollo> findCholloByTematica(Tematica tematica);
 	public List<Chollo> findCholloByDates (Date inicio, Date fin);
 	public List<Chollo> findCholloByPrecios (Double min, Double max);
+	public List<Chollo> findByCantPersonas (int cantPersonas);
 
 
 }

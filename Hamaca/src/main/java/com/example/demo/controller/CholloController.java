@@ -58,6 +58,7 @@ public class CholloController {
 			@RequestParam(name = "dataFinal", required = false) String dataFinalString,
 			@RequestParam(name = "precioMin", required = false) Double precioMin,
 			@RequestParam(name = "precioMax", required = false) Double precioMax,
+			@RequestParam(name = "cantPersonas", required = false) Integer cantPersonas,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
 
@@ -130,6 +131,15 @@ public class CholloController {
 				isFiltered = true;
 			} else {
 				filtro.retainAll(cholloService.findCholloByPrecios(precioMin, precioMax));
+			}
+		}
+		
+		if(cantPersonas != null) {
+			if (!isFiltered) {
+				filtro = new ArrayList<Chollo>(cholloService.findByCantPersonas(cantPersonas));
+				isFiltered = true;
+			} else {
+				filtro.retainAll(cholloService.findByCantPersonas(cantPersonas));
 			}
 		}
 

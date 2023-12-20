@@ -65,4 +65,10 @@ public class CholloService implements ICholloService{
 		return cholloDAO.findAllByPrecioPersonaBetween(min, max);
 	}
 
+	@Override
+	public List<Chollo> findByCantPersonas(int cantPersonas) {
+		// TODO Auto-generated method stub
+		return cholloDAO.findAllByCantidadPersonasGreaterThanEqual(cantPersonas);
+	}
+
 }
