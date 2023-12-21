@@ -102,11 +102,15 @@ public class ClienteController {
 
 		// Asocia la tematica con el chollo
 		if (cholloGuardar != null && cliente != null) {
-			cliente.getChollosFavoritos().add(cholloGuardar);
-			cholloGuardar.getClientesFavoritos().add(cliente);
-			entityManager.persist(cliente);
-			entityManager.persist(cholloGuardar);
-			return ResponseEntity.ok("Cliente asociado con éxito");
+			if(!cliente.getChollosFavoritos().contains(cholloGuardar)) {
+				cliente.getChollosFavoritos().add(cholloGuardar);
+				cholloGuardar.getClientesFavoritos().add(cliente);
+				entityManager.persist(cliente);
+				entityManager.persist(cholloGuardar);
+				return ResponseEntity.ok("Cliente asociado con éxito");
+			}else {
+				return new ResponseEntity<>("Chollo ya guardado", HttpStatus.CONFLICT);
+			}
 		}else {
 			return new ResponseEntity<>("No estás Logeado", HttpStatus.FORBIDDEN);
 		}

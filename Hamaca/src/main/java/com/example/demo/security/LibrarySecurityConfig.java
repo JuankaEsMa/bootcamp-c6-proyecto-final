@@ -50,6 +50,8 @@ public class LibrarySecurityConfig {
             "/cliente",
             "/cliente/**"
     };
+    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva", "/cliente/addCholloFav", "/cliente/removeCholloFav"};
+    public static final String[] ALLOW_PUT_URLs = {"/usuario" ,"/usuario/**"};
     private static final String[] SECURED_DELETE_URLs = {
     		"/chollo/**",
     		"/tematica/**",
@@ -58,8 +60,6 @@ public class LibrarySecurityConfig {
     		"/empleado/**",
     		"/cliente/**"
     };
-    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva", "/cliente/addCholloFav", "/cliente/removeCholloFav"};
-    public static final String[] ALLOW_PUT_URLs = {"/usuario" ,"/usuario/**"};
 
 
     @Autowired
@@ -87,6 +87,7 @@ public class LibrarySecurityConfig {
         		.cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth-> auth
         				.requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
                         .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
+                        .requestMatchers(HttpMethod.PUT, ALLOW_PUT_URLs).permitAll()
                         .requestMatchers(SECURED_URLs).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,SECURED_DELETE_URLs).hasAuthority("ADMIN")
