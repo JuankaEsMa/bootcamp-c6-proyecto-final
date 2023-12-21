@@ -78,32 +78,35 @@ public class UsuarioController {
         return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
 
-    @DeleteMapping("/{email}")
-    public ResponseEntity<String> delete(@PathVariable("email") String email, HttpServletRequest request){
+    @DeleteMapping("")
+    public ResponseEntity<String> delete(@RequestParam(name="email",required=false) String email, HttpServletRequest request){
     	//Implementar borrado lógico en vez de literal
 		Empleado empleado = cogerEmpleadoConToken();
 		Cliente cliente = cogerClienteConToken();
-		Usuario usuarioBorrar = usuarioService.getUser(email);
-		if(cliente.getUsuario() == usuarioBorrar) {
+		if(empleado != null) {
 	    	usuarioService.delete(email);
 	    	return ResponseEntity.ok("Tu usuario ha sido borrado");
-		}else if(empleado != null) {
+		}else if(cliente != null) {
 			usuarioService.delete(email);
 			return ResponseEntity.ok("El usuario ha sido borrado");
 		}else {
-			return new ResponseEntity<>("No estás autorizado para borrar éste cliente", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>("No estás logeado", HttpStatus.FORBIDDEN);
 		}
     }
 
 	@PutMapping("")
-	public ResponseEntity<Usuario> updateUsuario(HttpServletRequest request, @RequestBody Usuario usuario, @PathVariable("email") String email) {
+	public ResponseEntity<Usuario> updateUsuario(HttpServletRequest request, @RequestBody Usuario usuario, @RequestParam(name="email",required=false) String email) {
 		Empleado empleado = cogerEmpleadoConToken();
 		Cliente cliente = cogerClienteConToken();
         Usuario usuarioActualizar;
 		if(empleado != null) {
-			usuarioActualizar = usuarioService.getUser(email);
-			if(!usuario.getRoles().isBlank()) {
-				usuarioActualizar.setRoles(usuario.getRoles());
+			if(email != null) {
+				usuarioActualizar = usuarioService.getUser(email);
+				if(!usuario.getRoles().isBlank()) {
+					usuarioActualizar.setRoles(usuario.getRoles());
+				}
+			}else {
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 			}
 		}else{
 			usuarioActualizar = cliente.getUsuario();
