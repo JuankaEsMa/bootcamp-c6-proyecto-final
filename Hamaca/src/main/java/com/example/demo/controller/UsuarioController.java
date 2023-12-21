@@ -95,13 +95,16 @@ public class UsuarioController {
 		}
     }
 
-	@PutMapping("/{email}")
+	@PutMapping("")
 	public ResponseEntity<Usuario> updateUsuario(HttpServletRequest request, @RequestBody Usuario usuario, @PathVariable("email") String email) {
 		Empleado empleado = cogerEmpleadoConToken();
 		Cliente cliente = cogerClienteConToken();
         Usuario usuarioActualizar;
 		if(empleado != null) {
 			usuarioActualizar = usuarioService.getUser(email);
+			if(!usuario.getRoles().isBlank()) {
+				usuarioActualizar.setRoles(usuario.getRoles());
+			}
 		}else{
 			usuarioActualizar = cliente.getUsuario();
 		}
