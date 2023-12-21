@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     Password VARCHAR(200) not null,
 	Apellidos VARCHAR(250),
 	Telefono VARCHAR(9),
-	DNI VARCHAR(9) UNIQUE not null,
+	DNI VARCHAR(9) UNIQUE,
 	Direccion VARCHAR(60),
 	Email VARCHAR(50) UNIQUE not null,
 	Fecha_Nacimiento DATE,

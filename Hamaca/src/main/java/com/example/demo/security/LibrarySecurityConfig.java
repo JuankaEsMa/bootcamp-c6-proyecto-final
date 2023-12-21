@@ -58,7 +58,9 @@ public class LibrarySecurityConfig {
     		"/empleado/**",
     		"/cliente/**"
     };
-    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva", "/cliente/addCholloFav"};
+    public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva", "/cliente/addCholloFav", "/cliente/removeCholloFav"};
+    public static final String[] ALLOW_PUT_URLs = {"/usuario" ,"/usuario/**"};
+
 
     @Autowired
     private JWTAuthenticationFilter authenticationFilter;
@@ -88,6 +90,7 @@ public class LibrarySecurityConfig {
                         .requestMatchers(SECURED_URLs).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,SECURED_DELETE_URLs).hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT).hasAuthority("ADMIN")
                         )
                 .sessionManagement(management -> management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

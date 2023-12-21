@@ -113,6 +113,27 @@ public class ClienteController {
 
 
 	}
+	@PostMapping("/removeCholloFav")
+	@Transactional
+	public ResponseEntity<String> removeFavorito(@RequestBody Chollo chollo) {
+		Chollo cholloGuardar = cholloService.getChollo(chollo.getId());
+
+		// Obtiene el chollo por su ID
+		Cliente cliente = cogerClienteConToken();
+
+		// Asocia la tematica con el chollo
+		if (cholloGuardar != null && cliente != null) {
+			cliente.getChollosFavoritos().remove(cholloGuardar);
+			cholloGuardar.getClientesFavoritos().remove(cliente);
+			entityManager.persist(cliente);
+			entityManager.persist(cholloGuardar);
+			return ResponseEntity.ok("Cliente desasociado con éxito");
+		}else {
+			return new ResponseEntity<>("No estás Logeado", HttpStatus.FORBIDDEN);
+		}
+
+
+	}
 	public Cliente cogerClienteConToken() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserDetails userDetails =(UserDetails)auth.getPrincipal();
