@@ -51,8 +51,7 @@ public class UsuarioService implements IUserService {
     @Override
     @Transactional
     public void delete(String email) {
-    	System.out.println("Entra");
-        //usuarioDAO.deleteByEmail(email);
+        usuarioDAO.deleteByEmail(email);
     }
 
     @Override
@@ -63,7 +62,6 @@ public class UsuarioService implements IUserService {
 
     @Override
     public Usuario update(Usuario user) {
-        user.setRoles(user.getRoles());
         return usuarioDAO.save(user);
     }
 }

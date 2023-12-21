@@ -87,7 +87,7 @@ public class UsuarioController {
 	    	usuarioService.delete(email);
 	    	return ResponseEntity.ok("Tu usuario ha sido borrado");
 		}else if(cliente != null) {
-			usuarioService.delete(email);
+			usuarioService.delete(cliente.getUsuario().getEmail());
 			return ResponseEntity.ok("El usuario ha sido borrado");
 		}else {
 			return new ResponseEntity<>("No estás logeado", HttpStatus.FORBIDDEN);
