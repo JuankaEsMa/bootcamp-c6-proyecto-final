@@ -85,7 +85,7 @@ public class ReservaController {
 		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 	@PutMapping("/{id}/setNota")
-	public ResponseEntity<Reserva> setNota(HttpServletRequest request, @PathVariable Integer id, @RequestBody Integer nota){
+	public ResponseEntity<Reserva> setNota(HttpServletRequest request, @PathVariable Integer id, @RequestParam Integer nota){
 		Reserva reserva = reservaService.getReserva(id);
 		Cliente cliente = cogerClienteConToken();
 		System.out.println("ENTRA A SET NOTA");
