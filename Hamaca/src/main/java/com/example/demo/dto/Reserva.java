@@ -18,6 +18,10 @@ public class Reserva {
 	private int id;
 	@Column(name="Fecha_Compra")
 	private Date fechaCompra;
+	@Column(name="Fecha_Inicio")
+	private Date fechaInicio;
+	@Column(name="Fecha_Fin")
+	private Date fechaFin;
 	@Column(name="Num_Noches")
 	private int numNoches;
 	@Column(name="Num_Personas")
@@ -79,5 +83,20 @@ public class Reserva {
 	public void setCliente(Cliente id_Cliente) {
 		this.cliente = id_Cliente;
 	}
-	
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
 }

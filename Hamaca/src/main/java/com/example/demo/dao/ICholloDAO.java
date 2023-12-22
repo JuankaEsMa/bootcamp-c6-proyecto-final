@@ -15,5 +15,6 @@ public interface ICholloDAO extends JpaRepository<Chollo,Integer>{
 	List<Chollo> findAllByFechaCaducidadBetween(Date start, Date end );
 	List<Chollo> findAllByPrecioPersonaBetween(Double min, Double max );
 	List<Chollo> findAllByCantidadPersonasGreaterThanEqual(int CantidadPersonas);
+	List<Chollo> findByFechaCaducidadGreaterThan(Date date);
 }
 

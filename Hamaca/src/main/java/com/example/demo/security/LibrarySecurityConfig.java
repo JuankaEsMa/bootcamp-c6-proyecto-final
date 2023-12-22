@@ -51,7 +51,7 @@ public class LibrarySecurityConfig {
             "/cliente/**"
     };
     public static final String[] ALLOW_POST_URLs = {"/login" ,"/usuario","/reserva", "/cliente/addCholloFav", "/cliente/removeCholloFav"};
-    public static final String[] ALLOW_PUT_URLs = {"/usuario" ,"/usuario/**"};
+    public static final String[] ALLOW_PUT_URLs = {"/usuario" ,"/usuario/**", "/reserva/{id}/setNota"};
     private static final String[] ALLOW_DELETE_URLs = {
     		"/usuario"
     };

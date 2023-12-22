@@ -71,4 +71,10 @@ public class CholloService implements ICholloService{
 		return cholloDAO.findAllByCantidadPersonasGreaterThanEqual(cantPersonas);
 	}
 
+	@Override
+	public List<Chollo> findByFechaExpiration(Date date) {
+		// TODO Auto-generated method stub
+		return cholloDAO.findByFechaCaducidadGreaterThan(date);
+	}
+
 }

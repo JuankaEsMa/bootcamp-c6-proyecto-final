@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 
@@ -60,24 +64,43 @@ public class ReservaController {
 	@PostMapping("")
 	public ResponseEntity<Reserva> addReserva(HttpServletRequest request,
 			@RequestParam(name="idChollo", required=true) Integer idChollo, 
-			@RequestParam(name="numNoches", required=true) Integer numNoches, 
+			@RequestParam(name="fechaInicio", required=true) Date fechaInicio,
+			@RequestParam(name="fechaFin", required=true) Date fechaFin,
 			@RequestParam(name="numPersonas", required=true) Integer numPersonas) {
-		// TODO Auto-generated method stub
 		Cliente cliente = cogerClienteConToken();
 		Reserva reserva = new Reserva();
 		Chollo chollo = cholloService.getChollo(idChollo); 
-//		Calendar cal = Calendar.getInstance();
-
 		if(cliente != null && chollo != null) {
-			reserva.setCliente(cliente);
-			reserva.setChollo(chollo);
-//			reserva.setFechaCompra(cal.getTime());
-			reserva.setNumNoches(numNoches);
-			reserva.setNumPersonas(numPersonas);
-			return ResponseEntity.ok(reservaService.saveReserva(reserva));
-		}else {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			if(chollo.getFechaCaducidad().after(fechaInicio)){
+				reserva.setCliente(cliente);
+				reserva.setChollo(chollo);
+				reserva.setFechaCompra(Date.valueOf(LocalDate.now()));
+				reserva.setFechaInicio(fechaInicio);
+				reserva.setFechaFin(fechaFin);
+				reserva.setNumNoches(fechaFin.getDate() - fechaInicio.getDate());
+				reserva.setNumPersonas(numPersonas);
+				return ResponseEntity.ok(reservaService.saveReserva(reserva));
+			}			
 		}
+		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+	}
+	@PutMapping("/{id}/setNota")
+	public ResponseEntity<Reserva> setNota(HttpServletRequest request, @PathVariable Integer id, @RequestBody Integer nota){
+		Reserva reserva = reservaService.getReserva(id);
+		Cliente cliente = cogerClienteConToken();
+		System.out.println("ENTRA A SET NOTA");
+		if(cliente != null) {
+			List<Reserva> reservasCliente = reservaService.findReservaByCliente(cliente);
+			if(reservasCliente.contains(reserva)) {
+				if(nota >= 0 && nota <= 10) {
+					reserva.setNota(nota);
+					return ResponseEntity.ok(reservaService.saveReserva(reserva));
+				}else {
+					return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);		
+				}
+			}
+		}
+		return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);		
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<Reserva> updateReserva(HttpServletRequest request, @PathVariable Integer id, @RequestBody Reserva reserva) {

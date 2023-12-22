@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import java.sql.Date;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +79,16 @@ public class CholloController {
 		
 		// TODO Auto-generated method stub
 		ArrayList<Chollo> filtro = new ArrayList<Chollo>();
-		ArrayList<Chollo> allChollos = new ArrayList<>(cholloService.listChollo());
+		ArrayList<Chollo> allChollos;
+		Date dataInicio;
+		System.out.println(dataInicioString);
+		if(dataInicioString != null && !dataInicioString.isBlank()) {
+			dataInicio = Date.valueOf(dataInicioString);
+			System.out.println(dataInicio);
+			allChollos = new ArrayList<>(cholloService.findByFechaExpiration(dataInicio));
+		}else {
+			allChollos = new ArrayList<>(cholloService.findByFechaExpiration(Date.valueOf(LocalDate.now())));
+		}
 		boolean isFiltered = false;
 		
 		if (localidadName != null && !localidadName.isBlank()) {
@@ -123,8 +132,8 @@ public class CholloController {
 		}
 		if (dataInicioString != null && dataFinalString != null && !dataInicioString.isBlank() && !dataFinalString.isBlank()) {
 			try {
-				Date dataInicio = Date.valueOf(dataInicioString);
 				Date dataFinal = Date.valueOf(dataFinalString);
+				dataInicio = Date.valueOf(dataInicioString);
 				if (!isFiltered) {
 					filtro = new ArrayList<Chollo>(cholloService.findCholloByDates(dataInicio, dataFinal ));
 					isFiltered = true;
@@ -132,7 +141,6 @@ public class CholloController {
 					filtro.retainAll(cholloService.findCholloByDates(dataInicio, dataFinal));
 				}
 			}catch(Exception e) {
-				System.out.println("Mensaje error fechas: " + e.toString());
 				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 			}
 		}
