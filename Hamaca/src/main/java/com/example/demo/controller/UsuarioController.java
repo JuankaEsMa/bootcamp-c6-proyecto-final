@@ -45,6 +45,11 @@ public class UsuarioController {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
     }
+    @GetMapping("/myUser")
+    public ResponseEntity<Usuario> getMyUsuario(){
+    	Usuario usuario = cogerUsuarioConToken();
+    	return ResponseEntity.ok(usuario);
+    }
     @PostMapping("")
     public ResponseEntity<Usuario> add(@RequestBody Usuario usuario){
     	Cliente cliente =  new Cliente();
@@ -138,5 +143,11 @@ public class UsuarioController {
 		Usuario usuario = usuarioService.getUser(userDetails.getUsername());
 		Empleado empleado = empleadoService.findEmpleadoByUsuario(usuario);
 		return empleado;
+	}
+	public Usuario cogerUsuarioConToken() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails =(UserDetails)auth.getPrincipal();
+		Usuario usuario = usuarioService.getUser(userDetails.getUsername());
+		return usuario;
 	}
 }
